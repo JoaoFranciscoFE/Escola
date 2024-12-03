@@ -81,8 +81,6 @@ public class Main {
         }
     }
 
-
-
     private static void adicionarAluno() {
         System.out.print("Digite o nome do aluno: ");
         String nome = scanner.nextLine();
