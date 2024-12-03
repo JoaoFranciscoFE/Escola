@@ -192,8 +192,18 @@ public class Main {
         if (turmas.isEmpty()) {
             System.out.println("Nenhuma turma cadastrada.");
         } else {
-            for (Turma turma : turmas) {
-                turma.exibirDadosTurma();
+            for (int i = 0; i < turmas.size(); i++) {
+                System.out.println((i + 1) + ". " + turmas.get(i).getNome() + " | Ano: " + turmas.get(i).getAno());
+            }
+
+            System.out.print("Digite o número da turma para exibir os dados: ");
+            int escolhaTurma = Integer.parseInt(scanner.nextLine()) - 1;
+
+            if (escolhaTurma >= 0 && escolhaTurma < turmas.size()) {
+                Turma turmaEscolhida = turmas.get(escolhaTurma);
+                turmaEscolhida.exibirDadosTurma();
+            } else {
+                System.out.println("Turma inválida.");
             }
         }
     }
@@ -284,18 +294,35 @@ public class Main {
         }
 
         if (disciplinaEncontrada != null) {
-            try {
-                System.out.print("Digite a nota (0 a 10): ");
-                double nota = Double.parseDouble(scanner.nextLine());
-                if (nota < 0 || nota > 10) {
-                    System.out.println("Nota inválida. A nota deve ser entre 0 e 10.");
-                } else {
-                    Nota novaNota = new Nota(nota, TipoNota.PROVA);
-                    System.out.println("Nota registrada para a disciplina.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Por favor, insira uma nota válida.");
+            System.out.println("Escolha o tipo de nota:");
+            System.out.println("1. PROVA");
+            System.out.println("2. TRABALHO");
+            System.out.println("3. PROJETO");
+            System.out.print("Digite a opção (1/2/3): ");
+            String tipoNotaEscolhida = scanner.nextLine();
+
+            TipoNota tipoNota = null;
+            switch (tipoNotaEscolhida) {
+                case "1":
+                    tipoNota = TipoNota.PROVA;
+                    break;
+                case "2":
+                    tipoNota = TipoNota.TRABALHO;
+                    break;
+                case "3":
+                    tipoNota = TipoNota.PROJETO;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Nota não registrada.");
+                    return;
             }
+
+            System.out.print("Digite a nota (0 a 10): ");
+            double nota = scanner.nextDouble();
+
+            Nota novaNota = new Nota(nota, tipoNota);
+            disciplinaEncontrada.adicionarNota(novaNota);
+            System.out.println("Nota registrada para a disciplina.");
         } else {
             System.out.println("Disciplina não encontrada.");
         }
