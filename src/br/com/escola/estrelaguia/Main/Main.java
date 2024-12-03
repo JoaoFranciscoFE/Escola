@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static final List<Aluno> alunos = new ArrayList<>();
-    private static final List<Professor> professores = new ArrayList<>();
-    private static final List<Disciplina> disciplinas = new ArrayList<>();
-    private static final List<Turma> turmas = new ArrayList<>();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static List<Aluno> alunos = new ArrayList<>();
+    private static List<Professor> professores = new ArrayList<>();
+    private static List<Disciplina> disciplinas = new ArrayList<>();
+    private static List<Turma> turmas = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         inicializarTurmas();
@@ -63,11 +63,12 @@ public class Main {
         System.out.println("4. Remover Disciplina");
         System.out.println("5. Listar Alunos");
         System.out.println("6. Listar Disciplinas");
-        System.out.println("7. Consultar Notas");
-        System.out.println("8. Matricular Aluno em Disciplina");
-        System.out.println("9. Avaliar Disciplina");
-        System.out.println("10. Adicionar Professor");
-        System.out.println("11. Listar Professores");
+        System.out.println("7. Listar Turmas");
+        System.out.println("8. Consultar Notas");
+        System.out.println("9. Matricular Aluno em Disciplina");
+        System.out.println("10. Avaliar Disciplina");
+        System.out.println("11. Adicionar Professor");
+        System.out.println("12. Listar Professores");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -171,6 +172,17 @@ public class Main {
         } else {
             for (Disciplina disciplina : disciplinas) {
                 disciplina.detalhesDisciplina();
+            }
+        }
+    }
+
+    private static void exibirDadosTurma(){
+        System.out.println("\n=== Lista de Turmas ===");
+        if (turmas.isEmpty()) {
+            System.out.println("Nenhuma turma cadastrada.");
+        } else {
+            for (Turma turma : turmas) {
+                turma.exibirDadosTurma();
             }
         }
     }
