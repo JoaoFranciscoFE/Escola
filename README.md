@@ -50,4 +50,4 @@ O sistema é estruturado em classes que representam os principais elementos do s
 
 ## Licença
 
-Este projeto está sob a licença MIT.
+Este projeto está sob a licença do Professor Erlon
