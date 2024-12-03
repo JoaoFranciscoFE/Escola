@@ -8,12 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Aluno extends Pessoa {
-    private StatusMatricula statusMatricula;  // Adicionando status de matrícula
+    private StatusMatricula statusMatricula;
     private Set<Disciplina> disciplinas;
 
     public Aluno(String nome, String cpf) {
-        super(nome, cpf, TipoPessoa.ALUNO); // Tipo aluno
-        this.statusMatricula = StatusMatricula.DESMATRICULADO;  // Status inicial
+        super(nome, cpf, TipoPessoa.ALUNO);
+        this.statusMatricula = StatusMatricula.DESMATRICULADO;
         this.disciplinas = new HashSet<>();
     }
 

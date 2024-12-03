@@ -10,7 +10,7 @@ public class Professor extends Pessoa {
     private Set<Disciplina> disciplinas;
 
     public Professor(String nome, String cpf, String departamento) {
-        super(nome, cpf, TipoPessoa.PROFESSOR); // Aqui passamos o tipo PROFESSOR
+        super(nome, cpf, TipoPessoa.PROFESSOR);
         this.departamento = departamento;
         this.disciplinas = new HashSet<>();
     }

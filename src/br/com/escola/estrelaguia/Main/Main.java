@@ -30,11 +30,12 @@ public class Main {
                     case 4 -> removerDisciplina();
                     case 5 -> listarAlunos();
                     case 6 -> listarDisciplinas();
-                    case 7 -> consultarNotas();
-                    case 8 -> matricularAluno();
-                    case 9 -> avaliarDisciplina();
-                    case 10 -> adicionarProfessor();
-                    case 11 -> listarProfessores();
+                    case 7 -> exibirDadosTurma();
+                    case 8 -> consultarNotas();
+                    case 9 -> matricularAluno();
+                    case 10 -> avaliarDisciplina();
+                    case 11 -> adicionarProfessor();
+                    case 12 -> listarProfessores();
                     case 0 -> running = false;
                     default -> System.out.println("Opção inválida.");
                 }
@@ -47,9 +48,9 @@ public class Main {
     }
 
     private static void inicializarTurmas() {
-        Turma turma1 = new Turma("Turma A", 2024);
-        Turma turma2 = new Turma("Turma B", 2024);
-        Turma turma3 = new Turma("Turma C", 2024);
+        Turma turma1 = new Turma("Turma A", 2024, "10", new Professor("Paulo", "123", "Matemática"));
+        Turma turma2 = new Turma("Turma B", 2024, "10", new Professor("Gomez", "123", "História"));
+        Turma turma3 = new Turma("Turma C", 2024, "10", new Professor("Rodrigo", "123", "Ciências"));
         turmas.add(turma1);
         turmas.add(turma2);
         turmas.add(turma3);
@@ -119,19 +120,29 @@ public class Main {
         String tipo = scanner.nextLine().toUpperCase();
 
         if (tipo.equals("OBRIGATORIA")) {
-            System.out.print("Digite a carga horária: ");
-            int cargaHoraria = Integer.parseInt(scanner.nextLine());
-            Disciplina novaDisciplina = new DisciplinaObrigatoria(nome, cargaHoraria);
-            disciplinas.add(novaDisciplina);
+            try {
+                System.out.print("Digite a carga horária: ");
+                int cargaHoraria = Integer.parseInt(scanner.nextLine());
+                Disciplina novaDisciplina = new DisciplinaObrigatoria(nome, cargaHoraria);
+                disciplinas.add(novaDisciplina);
+                System.out.println("Disciplina adicionada com sucesso!");
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. A carga horária deve ser um número.");
+            }
         } else if (tipo.equals("ELETIVA")) {
             System.out.print("Requer aprovação? (true/false): ");
-            boolean requerAprovacao = Boolean.parseBoolean(scanner.nextLine());
-            Disciplina novaDisciplina = new DisciplinaEletiva(nome, requerAprovacao);
-            disciplinas.add(novaDisciplina);
+            boolean requerAprovacao;
+            try {
+                requerAprovacao = Boolean.parseBoolean(scanner.nextLine());
+                Disciplina novaDisciplina = new DisciplinaEletiva(nome, requerAprovacao);
+                disciplinas.add(novaDisciplina);
+                System.out.println("Disciplina adicionada com sucesso!");
+            } catch (Exception e) {
+                System.out.println("Erro ao adicionar disciplina.");
+            }
         } else {
             System.out.println("Tipo de disciplina inválido.");
         }
-        System.out.println("Disciplina adicionada com sucesso!");
     }
 
     private static void removerDisciplina() {
@@ -219,38 +230,41 @@ public class Main {
         }
 
         if (alunoEncontrado != null) {
-            // Exibir turmas disponíveis
             System.out.println("\n=== Turmas Disponíveis ===");
             for (int i = 0; i < turmas.size(); i++) {
                 System.out.println((i + 1) + ". " + turmas.get(i).getNome() + " | Ano: " + turmas.get(i).getAno());
             }
 
-            System.out.print("Escolha a turma para o aluno (digite o número): ");
-            int escolhaTurma = Integer.parseInt(scanner.nextLine()) - 1;
+            try {
+                System.out.print("Escolha a turma para o aluno (digite o número): ");
+                int escolhaTurma = Integer.parseInt(scanner.nextLine()) - 1;
 
-            if (escolhaTurma >= 0 && escolhaTurma < turmas.size()) {
-                Turma turmaEscolhida = turmas.get(escolhaTurma);
-                System.out.print("Digite o nome da disciplina: ");
-                String nomeDisciplina = scanner.nextLine();
-                Disciplina disciplinaEncontrada = null;
+                if (escolhaTurma >= 0 && escolhaTurma < turmas.size()) {
+                    Turma turmaEscolhida = turmas.get(escolhaTurma);
+                    System.out.print("Digite o nome da disciplina: ");
+                    String nomeDisciplina = scanner.nextLine();
+                    Disciplina disciplinaEncontrada = null;
 
-                for (Disciplina disciplina : disciplinas) {
-                    if (disciplina.getNome().equalsIgnoreCase(nomeDisciplina)) {
-                        disciplinaEncontrada = disciplina;
-                        break;
+                    for (Disciplina disciplina : disciplinas) {
+                        if (disciplina.getNome().equalsIgnoreCase(nomeDisciplina)) {
+                            disciplinaEncontrada = disciplina;
+                            break;
+                        }
                     }
-                }
 
-                if (disciplinaEncontrada != null) {
-                    alunoEncontrado.adicionarDisciplina(disciplinaEncontrada);
-                    turmaEscolhida.adicionarAluno(alunoEncontrado);  // Adiciona aluno à turma
-                    alunoEncontrado.alterarStatusMatricula(StatusMatricula.MATRICULADO);  // Atualiza status
-                    System.out.println("Aluno matriculado na disciplina e turma com sucesso!");
+                    if (disciplinaEncontrada != null) {
+                        alunoEncontrado.adicionarDisciplina(disciplinaEncontrada);
+                        turmaEscolhida.adicionarAluno(alunoEncontrado);
+                        alunoEncontrado.alterarStatusMatricula(StatusMatricula.MATRICULADO);
+                        System.out.println("Aluno matriculado na disciplina e turma com sucesso!");
+                    } else {
+                        System.out.println("Disciplina não encontrada.");
+                    }
                 } else {
-                    System.out.println("Disciplina não encontrada.");
+                    System.out.println("Turma inválida.");
                 }
-            } else {
-                System.out.println("Turma inválida.");
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido para a turma.");
             }
         } else {
             System.out.println("Aluno não encontrado.");
@@ -270,14 +284,23 @@ public class Main {
         }
 
         if (disciplinaEncontrada != null) {
-            System.out.print("Digite a nota (0 a 10): ");
-            double nota = Double.parseDouble(scanner.nextLine());
-            Nota novaNota = new Nota(nota, TipoNota.PROVA);
-            System.out.println("Nota registrada para a disciplina.");
+            try {
+                System.out.print("Digite a nota (0 a 10): ");
+                double nota = Double.parseDouble(scanner.nextLine());
+                if (nota < 0 || nota > 10) {
+                    System.out.println("Nota inválida. A nota deve ser entre 0 e 10.");
+                } else {
+                    Nota novaNota = new Nota(nota, TipoNota.PROVA);
+                    System.out.println("Nota registrada para a disciplina.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, insira uma nota válida.");
+            }
         } else {
             System.out.println("Disciplina não encontrada.");
         }
     }
+
     private static void adicionarProfessor() {
         System.out.print("Digite o nome do professor: ");
         String nome = scanner.nextLine();
