@@ -2,6 +2,7 @@ package br.com.escola.estrelaguia.Model;
 
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
 
+// Está aqui pois a disciplina que está no código é abstrata (Sim Erlon, sou eu escrevendo)
 public class DisciplinaEletiva extends Disciplina {
     private boolean requerAprovacao;
 

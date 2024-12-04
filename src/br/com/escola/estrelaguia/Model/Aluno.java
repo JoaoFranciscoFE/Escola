@@ -1,13 +1,13 @@
 package br.com.escola.estrelaguia.Model;
 
+import br.com.escola.estrelaguia.Contracts.IConsultar;
 import br.com.escola.estrelaguia.Enums.StatusMatricula;
 import br.com.escola.estrelaguia.Enums.TipoPessoa;
-
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Aluno extends Pessoa {
+public class Aluno extends Pessoa implements IConsultar {
     private StatusMatricula statusMatricula;
     private Set<Disciplina> disciplinas;
 
@@ -21,18 +21,6 @@ public class Aluno extends Pessoa {
         this.statusMatricula = status;
     }
 
-    public StatusMatricula getStatusMatricula() {
-        return statusMatricula;
-    }
-
-    public void setStatusMatricula(StatusMatricula statusMatricula) {
-        this.statusMatricula = statusMatricula;
-    }
-
-    public Set<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
     public void adicionarDisciplina(Disciplina disciplina) {
         disciplinas.add(disciplina);
     }
@@ -40,5 +28,14 @@ public class Aluno extends Pessoa {
     @Override
     public void exibirDados() {
         System.out.println("Aluno: " + getNome() + " | CPF: " + getCpf() + " | Status Matrícula: " + statusMatricula);
+    }
+
+    @Override
+    public void consultar(String consultado) {
+        if (getNome().equalsIgnoreCase(consultado) || getCpf().equals(consultado)) {
+            exibirDados();
+        } else {
+            System.out.println("Aluno não encontrado com o critério fornecido: " + consultado);
+        }
     }
 }

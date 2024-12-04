@@ -14,16 +14,8 @@ public abstract class Disciplina {
         this.tipo = tipo;
     }
 
-    public List<Nota> getNotas() {
-        return notas;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public TipoDisciplina getTipo() {
-        return tipo;
     }
 
     public void adicionarNota(Nota nota) {

@@ -22,45 +22,15 @@ public class Turma {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getAno() {
         return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public Set<Aluno> getAlunos() {
-        return alunos;
     }
 
     public void adicionarAluno(Aluno aluno) {
         alunos.add(aluno);
     }
 
-    public void removerAluno(Aluno aluno) {
-        alunos.remove(aluno);
-    }
 
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public Professor getProfessorResponsavel() {
-        return professorResponsavel;
-    }
-
-    public void setProfessorResponsavel(Professor professorResponsavel) {
-        this.professorResponsavel = professorResponsavel;
-    }
     public void exibirDadosTurma() {
         System.out.println("Turma: " + nome + " | Ano: " + ano + " | Horário: " + horario);
         if (professorResponsavel != null) {

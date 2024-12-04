@@ -12,10 +12,13 @@ public class Main {
     private static List<Professor> professores = new ArrayList<>();
     private static List<Disciplina> disciplinas = new ArrayList<>();
     private static List<Turma> turmas = new ArrayList<>();
+    private static List<Aluno> listaDeAlunos = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         inicializarTurmas();
+        inicializarAlunos();
+        inicializarDisciplinas();
         boolean running = true;
 
         while (running) {
@@ -36,6 +39,9 @@ public class Main {
                     case 10 -> avaliarDisciplina();
                     case 11 -> adicionarProfessor();
                     case 12 -> listarProfessores();
+                    case 13 -> consultarAluno();
+                    case 14 -> alterarCargaHorariaDisciplina();
+                    case 15 -> atualizarDepartamentoDisciplina();
                     case 0 -> running = false;
                     default -> System.out.println("Opção inválida.");
                 }
@@ -56,22 +62,33 @@ public class Main {
         turmas.add(turma3);
     }
 
+    private static void inicializarAlunos() {
+        Aluno aluno1 = new Aluno("Maria Silva", "123.456.789-00");
+        Aluno aluno2 = new Aluno("João Santos", "987.654.321-00");
+        Aluno aluno3 = new Aluno("Ana Pereira", "456.789.123-00");
+
+        listaDeAlunos.add(aluno1);
+        listaDeAlunos.add(aluno2);
+        listaDeAlunos.add(aluno3);
+    }
+
+    private static void inicializarDisciplinas() {
+        DisciplinaObrigatoria d1 = new DisciplinaObrigatoria(
+                "Matemática Avançada", 120, "Prof. João Silva",
+                40, true, "Departamento de Ciências Exatas"
+        );
+        DisciplinaObrigatoria d2 = new DisciplinaObrigatoria(
+                "História Contemporânea", 90, "Prof. Ana Martins",
+                35, false, "Departamento de Humanas"
+        );
+
+        disciplinas.add(d1);
+        disciplinas.add(d2);
+    }
+
+
     private static void exibirMenu() {
-        System.out.println("\n=== MENU ===");
-        System.out.println("1. Adicionar Aluno");
-        System.out.println("2. Remover Aluno");
-        System.out.println("3. Adicionar Disciplina");
-        System.out.println("4. Remover Disciplina");
-        System.out.println("5. Listar Alunos");
-        System.out.println("6. Listar Disciplinas");
-        System.out.println("7. Listar Turmas");
-        System.out.println("8. Consultar Notas");
-        System.out.println("9. Matricular Aluno em Disciplina");
-        System.out.println("10. Avaliar Disciplina");
-        System.out.println("11. Adicionar Professor");
-        System.out.println("12. Listar Professores");
-        System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
+        System.out.println("\n=== MENU ===\n1. Adicionar Aluno\n2. Remover Aluno\n3. Adicionar Disciplina\n4. Remover Disciplina\n5. Listar Alunos\n6. Listar Disciplinas\n7. Listar Turmas\n8. Consultar Notas\n9. Matricular Aluno em Disciplina\n10. Avaliar Disciplina\n11. Adicionar Professor\n12. Listar Professores\n13. Consulta aluno por CPF\n14. Alterar carga hóraria da disciplina\n15. Atualizar departamento da disciplina\n0. Sair\nEscolha uma opção: ");
     }
 
     private static int obterOpcao() {
@@ -116,33 +133,23 @@ public class Main {
     private static void adicionarDisciplina() {
         System.out.print("Digite o nome da disciplina: ");
         String nome = scanner.nextLine();
-        System.out.print("Digite o tipo da disciplina (OBRIGATORIA/ELETIVA): ");
-        String tipo = scanner.nextLine().toUpperCase();
+        System.out.print("Digite a carga horária: ");
+        int cargaHoraria = scanner.nextInt();
+        System.out.print("Digite o nome do professor responsável: ");
+        String professorResponsavel = scanner.nextLine();
+        System.out.print("Digite o número máximo de alunos: ");
+        int numeroMaximoAlunos = scanner.nextInt();
+        System.out.print("Requer laboratório? (true/false): ");
+        boolean laboratorioRequerido = scanner.nextBoolean();
+        System.out.print("Digite o departamento: ");
+        String departamento = scanner.nextLine();
 
-        if (tipo.equals("OBRIGATORIA")) {
-            try {
-                System.out.print("Digite a carga horária: ");
-                int cargaHoraria = Integer.parseInt(scanner.nextLine());
-                Disciplina novaDisciplina = new DisciplinaObrigatoria(nome, cargaHoraria);
-                disciplinas.add(novaDisciplina);
-                System.out.println("Disciplina adicionada com sucesso!");
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. A carga horária deve ser um número.");
-            }
-        } else if (tipo.equals("ELETIVA")) {
-            System.out.print("Requer aprovação? (true/false): ");
-            boolean requerAprovacao;
-            try {
-                requerAprovacao = Boolean.parseBoolean(scanner.nextLine());
-                Disciplina novaDisciplina = new DisciplinaEletiva(nome, requerAprovacao);
-                disciplinas.add(novaDisciplina);
-                System.out.println("Disciplina adicionada com sucesso!");
-            } catch (Exception e) {
-                System.out.println("Erro ao adicionar disciplina.");
-            }
-        } else {
-            System.out.println("Tipo de disciplina inválido.");
-        }
+        DisciplinaObrigatoria novaDisciplina = new DisciplinaObrigatoria(
+                nome, cargaHoraria, professorResponsavel,
+                numeroMaximoAlunos, laboratorioRequerido, departamento
+        );
+        disciplinas.add(novaDisciplina);
+        System.out.println("Disciplina Obrigatória adicionada com sucesso!");
     }
 
     private static void removerDisciplina() {
@@ -177,17 +184,17 @@ public class Main {
     }
 
     private static void listarDisciplinas() {
-        System.out.println("\n=== Lista de Disciplinas ===");
         if (disciplinas.isEmpty()) {
             System.out.println("Nenhuma disciplina cadastrada.");
         } else {
+            System.out.println("Lista de disciplinas:");
             for (Disciplina disciplina : disciplinas) {
                 disciplina.detalhesDisciplina();
             }
         }
     }
 
-    private static void exibirDadosTurma(){
+    private static void exibirDadosTurma() {
         System.out.println("\n=== Lista de Turmas ===");
         if (turmas.isEmpty()) {
             System.out.println("Nenhuma turma cadastrada.");
@@ -368,5 +375,48 @@ public class Main {
                 professor.exibirDados();
             }
         }
+    }
+
+    private static void consultarAluno() {
+        System.out.print("Digite o nome ou CPF do aluno para consulta: ");
+        String criterio = scanner.nextLine();
+
+        for (Aluno aluno : listaDeAlunos) {
+            aluno.consultar(criterio);
+            break;
+        }
+    }
+
+    private static void alterarCargaHorariaDisciplina() {
+        System.out.print("Digite o nome da disciplina para alterar a carga horária: ");
+        String nomeDisciplina = scanner.nextLine();
+
+        for (Disciplina disciplina : disciplinas) {
+            if (disciplina instanceof DisciplinaObrigatoria && disciplina.getNome().equalsIgnoreCase(nomeDisciplina)) {
+                System.out.print("Digite a nova carga horária: ");
+                int novaCargaHoraria = scanner.nextInt();
+                scanner.nextLine();
+                ((DisciplinaObrigatoria) disciplina).alterarCargaHoraria(novaCargaHoraria);
+                System.out.println("Carga horária alterada com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Disciplina não encontrada ou não é obrigatória.");
+    }
+
+    private static void atualizarDepartamentoDisciplina() {
+        System.out.print("Digite o nome da disciplina para atualizar o departamento: ");
+        String nomeDisciplina = scanner.nextLine();
+
+        for (Disciplina disciplina : disciplinas) {
+            if (disciplina instanceof DisciplinaObrigatoria && disciplina.getNome().equalsIgnoreCase(nomeDisciplina)) {
+                System.out.print("Digite o novo departamento: ");
+                String novoDepartamento = scanner.nextLine();
+                ((DisciplinaObrigatoria) disciplina).atualizarDepartamento(novoDepartamento);
+                System.out.println("Departamento atualizado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Disciplina não encontrada ou não é obrigatória.");
     }
 }

@@ -14,19 +14,7 @@ public class Professor extends Pessoa {
         this.departamento = departamento;
         this.disciplinas = new HashSet<>();
     }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public Set<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
+    
     public void adicionarDisciplina(Disciplina disciplina) {
         disciplinas.add(disciplina);
     }
