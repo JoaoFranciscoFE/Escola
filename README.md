@@ -51,3 +51,7 @@ O sistema é estruturado em classes que representam os principais elementos do s
 ## Licença
 
 Este projeto está sob a licença do Professor Erlon
+
+![image](https://github.com/user-attachments/assets/73998130-0ab5-4090-b148-8a9e9bdfd4e8)
+
+
