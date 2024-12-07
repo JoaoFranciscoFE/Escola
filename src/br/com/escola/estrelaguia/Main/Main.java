@@ -255,7 +255,6 @@ public class Main {
                             System.out.println("Disciplina cadastrada com sucesso!");
                             break;
                         case 2:
-                            // Listar Disciplinas
                             DisciplinaCoDAO disciplinaConcretaDAO2 = new DisciplinaCoDAO();
                             List<DisciplinaConcreta> disciplinas = disciplinaConcretaDAO2.listarDisciplinasConcretas();
 
@@ -264,7 +263,6 @@ public class Main {
                             }
                             break;
                         case 3:
-                            // Buscar Disciplina
                             System.out.print("Digite o código da disciplina: ");
                             String codigoDisciplinaBuscar = scanner.nextLine();
 
@@ -278,7 +276,6 @@ public class Main {
                             }
                             break;
                         case 4:
-                            // Atualizar Disciplina
                             System.out.print("Digite o código da disciplina: ");
                             String codigoDisciplinaAtualizar = scanner.nextLine();
                             System.out.print("Digite o novo nome da disciplina: ");
@@ -307,7 +304,6 @@ public class Main {
                             }
                             break;
                         case 6:
-                            // Voltar
                             break;
                         default:
                             System.out.println("Opção inválida. Tente novamente.");
