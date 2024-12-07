@@ -285,8 +285,26 @@ public class Main {
                                         System.out.print("Digite o horário das aulas: ");
                                         String horarioAulas = scanner.nextLine();
 
-                                        Disciplina disciplina = new DisciplinaConcreta(nomeDisciplina, tipoDisciplina, cargaHoraria, professor, horarioAulas);
-                                        disciplinas.add(disciplina);
+                                        System.out.print("Digite o tipo de disciplina (CONCRETA ou ELETIVA): ");
+                                        String tipo = scanner.nextLine();
+
+                                        if (tipo.equalsIgnoreCase("CONCRETA")) {
+                                            Disciplina disciplina = new DisciplinaConcreta(nomeDisciplina, tipoDisciplina, cargaHoraria, professor, horarioAulas);
+                                            disciplinas.add(disciplina);
+                                        } else if (tipo.equalsIgnoreCase("ELETIVA")) {
+                                            System.out.print("Digite se a disciplina requer aprovação (SIM ou NÃO): ");
+                                            boolean requerAprovacao = scanner.nextLine().equalsIgnoreCase("SIM");
+                                            System.out.print("Digite a área de estudo da disciplina: ");
+                                            String areaDeEstudo = scanner.nextLine();
+                                            System.out.print("Digite a duração da disciplina em semanas: ");
+                                            int duracaoSemanas = scanner.nextInt();
+                                            scanner.nextLine();
+                                            System.out.print("Digite os recursos extras da disciplina: ");
+                                            String recursosExtras = scanner.nextLine();
+
+                                            Disciplina disciplina = new DisciplinaEletiva(nomeDisciplina, requerAprovacao, areaDeEstudo, duracaoSemanas, recursosExtras);
+                                            disciplinas.add(disciplina);
+                                        }
 
                                         System.out.println("Disciplina cadastrada com sucesso!");
                                         break;

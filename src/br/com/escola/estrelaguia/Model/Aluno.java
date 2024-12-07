@@ -37,10 +37,6 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
         return statusMatricula == StatusMatricula.ATIVO;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }

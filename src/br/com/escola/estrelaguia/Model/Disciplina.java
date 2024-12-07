@@ -38,38 +38,6 @@ public abstract class Disciplina {
         return tipo;
     }
 
-    public void setTipo(TipoDisciplina tipo) {
-        this.tipo = tipo;
-    }
-
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public String getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(String professor) {
-        this.professor = professor;
-    }
-
-    public String getHorarioAulas() {
-        return horarioAulas;
-    }
-
-    public void setHorarioAulas(String horarioAulas) {
-        this.horarioAulas = horarioAulas;
-    }
-
-    public List<String> getMateriais() {
-        return materiais;
-    }
-
     public List<Nota> getNotas() {
         return notas;
     }
@@ -82,42 +50,6 @@ public abstract class Disciplina {
         return alunosMatriculados;
     }
 
-    public void setMaximoAlunos(int maximoAlunos) {
-        this.maximoAlunos = maximoAlunos;
-    }
-
-    public void adicionarMaterial(String material) {
-        materiais.add(material);
-    }
-
-    public void listarMateriais() {
-        System.out.println("Materiais da disciplina " + nome + ":");
-        for (String material : materiais) {
-            System.out.println(" - " + material);
-        }
-    }
-
-    public void adicionarNota(Nota nota) {
-        notas.add(nota);
-    }
-
-    public double calcularMediaNotas() {
-        if (notas.isEmpty()) {
-            return 0.0;
-        }
-        double soma = 0.0;
-        for (Nota nota : notas) {
-            soma += nota.getValor();
-        }
-        return soma / notas.size();
-    }
-    public void adicionarAluno(Aluno aluno) {
-        if (alunosMatriculados.size() < maximoAlunos) {
-            alunosMatriculados.add(aluno);
-        } else {
-            System.out.println("Não há vagas disponíveis para a disciplina: " + nome);
-        }
-    }
 
     public abstract void detalhesDisciplina();
 
