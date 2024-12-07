@@ -187,7 +187,6 @@ public class Main {
     private static void desmatricularAluno(Scanner scanner) {
         System.out.print("Digite o CPF do aluno: ");
         String cpf = scanner.nextLine();
-
         Aluno aluno = buscarAlunoPorCpf(cpf);
         if (aluno != null) {
             aluno.desmatricular();

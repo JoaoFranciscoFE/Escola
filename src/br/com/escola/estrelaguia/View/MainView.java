@@ -32,8 +32,8 @@ public class MainView {
 
             switch (choice) {
                 case 1:
-                    AlunoView alunoView = new AlunoView(alunoDAO);
-                    alunoView.showMenu();
+                    MainView mainView = new MainView(alunoDAO, professorDAO, disciplinaDAO, turmaDAO);
+                    mainView.showMenu();
                     break;
                 case 2:
                     ProfessorView professorView = new ProfessorView(professorDAO, alunoDAO, disciplinaDAO, turmaDAO);
