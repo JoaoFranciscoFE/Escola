@@ -1,8 +1,6 @@
 package br.com.escola.estrelaguia.Main;
 
-import br.com.escola.estrelaguia.DAO.AlunoDAO;
-import br.com.escola.estrelaguia.DAO.DisciplinaCoDAO;
-import br.com.escola.estrelaguia.DAO.ProfessorDAO;
+
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
 import br.com.escola.estrelaguia.Model.*;
 
@@ -106,11 +104,7 @@ public class Main {
                                         System.out.print("Digite o CPF do aluno: ");
                                         String cpfAlunoExcluir = scanner.nextLine();
 
-                                        for (Aluno a : alunos) {
-                                            if (a.getCpf().equals(cpfAlunoExcluir)) {
-                                                alunos.remove(a);
-                                            }
-                                        }
+                                        alunos.removeIf(a -> a.getCpf().equals(cpfAlunoExcluir));
 
                                         System.out.println("Aluno excluído com sucesso!");
                                         break;
@@ -228,11 +222,7 @@ public class Main {
                                         System.out.print("Digite o CPF do professor: ");
                                         String cpfProfessorExcluir = scanner.nextLine();
 
-                                        for (Professor p : professores) {
-                                            if (p.getCpf().equals(cpfProfessorExcluir)) {
-                                                professores.remove(p);
-                                            }
-                                        }
+                                        professores.removeIf(p -> p.getCpf().equals(cpfProfessorExcluir));
 
                                         System.out.println("Professor excluído com sucesso!");
                                         break;
@@ -333,11 +323,7 @@ public class Main {
                                         System.out.print("Digite o código da disciplina: ");
                                         String codigoDisciplinaExcluir = scanner.nextLine();
 
-                                        for (Disciplina d : disciplinas) {
-                                            if (d.getNome().equals(codigoDisciplinaExcluir)) {
-                                                disciplinas.remove(d);
-                                            }
-                                        }
+                                        disciplinas.removeIf(d -> d.getNome().equals(codigoDisciplinaExcluir));
 
                                         System.out.println("Disciplina excluída com sucesso!");
                                         break;
