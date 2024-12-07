@@ -1,7 +1,21 @@
 package br.com.escola.estrelaguia.Model;
 
-import br.com.escola.estrelaguia.Contracts.IAvaliar;
+public abstract class Avaliacao {
+    protected String nome;
+    protected double peso;
 
-public abstract class Avaliacao implements IAvaliar {
+    public Avaliacao(String nome, double peso) {
+        this.nome = nome;
+        this.peso = peso;
+    }
+
     public abstract double calcularNotaFinal();
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
 }

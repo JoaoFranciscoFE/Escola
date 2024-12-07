@@ -1,6 +1,10 @@
 package br.com.escola.estrelaguia.Enums;
 
 public enum StatusMatricula {
-    MATRICULADO,
-    DESMATRICULADO
+    ATIVO,
+    DESMATRICULADO;
+
+    public boolean isAtivo() {
+        return this == ATIVO;
+    }
 }
