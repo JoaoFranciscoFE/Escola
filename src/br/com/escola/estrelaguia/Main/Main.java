@@ -5,319 +5,360 @@ import br.com.escola.estrelaguia.DAO.DisciplinaCoDAO;
 import br.com.escola.estrelaguia.DAO.ProfessorDAO;
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
 import br.com.escola.estrelaguia.Model.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class Main {
+    static List<Aluno> alunos = new ArrayList<>();
+    static List<Professor> professores = new ArrayList<>();
+    static List<Disciplina> disciplinas = new ArrayList<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        try {
-            System.out.println("Menu Principal");
-            System.out.println("1. Alunos");
-            System.out.println("2. Professores");
-            System.out.println("3. Disciplinas");
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+        Aluno aluno = null;
+        boolean menuInicial = true;
+        while (menuInicial) {
+            try {
+                System.out.println("Menu Principal");
+                System.out.println("1. Alunos");
+                System.out.println("2. Professores");
+                System.out.println("3. Disciplinas");
+                System.out.println("4. Sair");
 
-            switch (opcao) {
-                case 1:
-                    // Menu de Alunos (para não se perder)
-                    System.out.println("Menu de Alunos");
-                    System.out.println("1. Cadastrar Aluno");
-                    System.out.println("2. Listar Alunos");
-                    System.out.println("3. Buscar Aluno");
-                    System.out.println("4. Atualizar Aluno");
-                    System.out.println("5. Excluir Aluno");
-                    System.out.println("6. Matricular Aluno em Disciplina");
-                    System.out.println("7. Desmatricular Aluno de Disciplina");
-                    System.out.println("8. Voltar");
+                System.out.println("Digite uma opção:");
+                int opcaoMenuInicial = scanner.nextInt();
+                scanner.nextLine();
 
-                    int opcaoAluno = scanner.nextInt();
-                    scanner.nextLine();
+                switch (opcaoMenuInicial) {
+                    case 1:
+                        boolean menuAlunos = true;
+                        while (menuAlunos) {
+                            System.out.println("Menu de Alunos");
+                            System.out.println("1. Cadastrar Aluno");
+                            System.out.println("2. Listar Alunos");
+                            System.out.println("3. Buscar Aluno");
+                            System.out.println("4. Atualizar Aluno");
+                            System.out.println("5. Excluir Aluno");
+                            System.out.println("6. Matricular Aluno em Disciplina");
+                            System.out.println("7. Desmatricular Aluno de Disciplina");
+                            System.out.println("8. Voltar");
 
-                    switch (opcaoAluno) {
-                        case 1:
-                            System.out.print("Digite o nome do aluno: ");
-                            String nomeAluno = scanner.nextLine();
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAluno = scanner.nextLine();
-                            System.out.print("Digite o telefone do aluno: ");
-                            String telefoneAluno = scanner.nextLine();
-                            System.out.print("Digite o e-mail do aluno: ");
-                            String emailAluno = scanner.nextLine();
-                            System.out.print("Digite o endereco do aluno: ");
-                            String endereco = scanner.nextLine();
-                            System.out.print("Digite o ano de ingresso do aluno: ");
-                            int anoingreco = scanner.nextInt();
-
-                            Aluno aluno = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoingreco);
-                            AlunoDAO alunoDAO = new AlunoDAO();
-                            alunoDAO.cadastrarAluno(aluno);
-
-                            System.out.println("Aluno registrado com sucesso!");
-                            break;
-                        case 2:
-
-                            AlunoDAO alunoDAO2 = new AlunoDAO();
-                            List<Aluno> alunos = alunoDAO2.buscarAlunos();
-
-                            for (Aluno a : alunos) {
-                                System.out.println(a.getNome() + " - " + a.getCpf());
-                            }
-                            break;
-                        case 3:
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAlunoBuscar = scanner.nextLine();
-
-                            AlunoDAO alunoDAO3 = new AlunoDAO();
-                            Aluno alunoBuscar = alunoDAO3.buscarAlunoPorCpf(cpfAlunoBuscar);
-
-                            if (alunoBuscar != null) {
-                                System.out.println(alunoBuscar.getNome() + " - " + alunoBuscar.getCpf());
-                            } else {
-                                System.out.println("Aluno não encontrado!");
-                            }
-                            break;
-                        case 4:
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAlunoAtualizar = scanner.nextLine();
-                            System.out.print("Digite o novo nome do aluno: ");
-                            String nomeAlunoAtualizar = scanner.nextLine();
-                            System.out.print("Digite o novo e-mail do aluno: ");
-                            String emailAlunoAtualizar = scanner.nextLine();
-
-                            AlunoDAO alunoDAO4 = new AlunoDAO();
-                            alunoDAO4.atualizarAluno(cpfAlunoAtualizar, nomeAlunoAtualizar, emailAlunoAtualizar);
-
-                            System.out.println("Aluno atualizado com sucesso!");
-                            break;
-                        case 5:
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAlunoExcluir = scanner.nextLine();
-
-                            AlunoDAO alunoDAO5 = new AlunoDAO();
-                            alunoDAO5.excluirAluno(cpfAlunoExcluir);
-
-                            System.out.println("Aluno excluído com sucesso!");
-                            break;
-                        case 6:
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAlunoMatricular = scanner.nextLine();
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaMatricular = scanner.nextLine();
-
-                            AlunoDAO alunoDAO6 = new AlunoDAO();
-                            try {
-                                alunoDAO6.matricularAluno(aluno, cpfAlunoMatricular, codigoDisciplinaMatricular);
-                                System.out.println("Aluno matriculado na disciplina com sucesso!");
-                            } catch (Exception e) {
-                                System.out.println("Erro ao matricular aluno: " + e.getMessage());
-                            }
-                            break;
-                        case 7:
-                            System.out.print("Digite o CPF do aluno: ");
-                            String cpfAlunoDesmatricular = scanner.nextLine();
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaDesmatricular = scanner.nextLine();
-
-                            AlunoDAO alunoDAO7 = new AlunoDAO();
-                            try {
-                                alunoDAO7.desmatricularAluno(aluno, cpfAlunoDesmatricular, codigoDisciplinaDesmatricular);
-                                System.out.println("Aluno desmatriculado da disciplina com sucesso!");
-                            } catch (Exception e) {
-                                System.out.println("Erro ao desmatricular aluno: " + e.getMessage());
-                            }
-                            break;
-                        case 8:
-                            break;
-                        default:
-                            System.out.println("Opção inválida. Tente novamente.");
-                    }
-                case 2:
-                    // Menu de Professores (para não se perder)
-                    System.out.println("Menu de Professores");
-                    System.out.println("1. Cadastrar Professor");
-                    System.out.println("2. Listar Professores");
-                    System.out.println("3. Buscar Professor");
-                    System.out.println("4. Atualizar Professor");
-                    System.out.println("5. Excluir Professor");
-                    System.out.println("6. Atribuir Professor a Disciplina");
-                    System.out.println("7. Voltar");
-
-                    int opcaoProfessor = scanner.nextInt();
-                    scanner.nextLine();
-
-                    switch (opcaoProfessor) {
-                        case 1:
-
-                            System.out.print("Digite o nome do professor: ");
-                            String nomeProfessor = scanner.nextLine();
-                            System.out.print("Digite o CPF do professor: ");
-                            String cpfProfessor = scanner.nextLine();
-                            System.out.print("Digite o departamento do professor: ");
-                            String departamentoProfessor = scanner.nextLine();
-
-                            ProfessorDAO professorDAO = new ProfessorDAO();
-                            Professor professor = professorDAO.criarProfessor(nomeProfessor, cpfProfessor, departamentoProfessor);
-
-                            System.out.println("Professor criado com sucesso!");
-                            break;
-                        case 2:
-                            ProfessorDAO professorDAO2 = new ProfessorDAO();
-                            List<Professor> professores = professorDAO2.listarProfessores();
-
-                            for (Professor p : professores) {
-                                System.out.println(p.getNome() + " - " + p.getCpf());
-                            }
-                            break;
-                        case 3:
-                            System.out.print("Digite o CPF do professor: ");
-                            String cpfProfessorBuscar = scanner.nextLine();
-
-                            ProfessorDAO professorDAO3 = new ProfessorDAO();
-                            Professor professorBuscar = professorDAO3.buscarProfessor(cpfProfessorBuscar);
-
-                            if (professorBuscar != null) {
-                                System.out.println(professorBuscar.getNome() + " - " + professorBuscar.getCpf());
-                            } else {
-                                System.out.println("Professor não encontrado!");
-                            }
-                            break;
-                        case 4:
-                            System.out.print("Digite o CPF do professor: ");
-                            String cpfProfessorAtualizar = scanner.nextLine();
-                            System.out.print("Digite o novo nome do professor: ");
-                            String nomeProfessorAtualizar = scanner.nextLine();
-                            System.out.print("Digite o novo e-mail do professor: ");
-                            String emailProfessorAtualizar = scanner.nextLine();
-
-                            ProfessorDAO professorDAO4 = new ProfessorDAO();
-                            professorDAO4.atualizarProfessor(cpfProfessorAtualizar, nomeProfessorAtualizar, emailProfessorAtualizar);
-
-                            System.out.println("Professor atualizado com sucesso!");
-                            break;
-                        case 5:
-                            System.out.print("Digite o CPF do professor: ");
-                            String cpfProfessorExcluir = scanner.nextLine();
-
-                            ProfessorDAO professorDAO5 = new ProfessorDAO();
-                            professorDAO5.excluirProfessor(cpfProfessorExcluir);
-
-                            System.out.println("Professor excluído com sucesso!");
-                            break;
-                        case 6:
-                            System.out.print("Digite o CPF do professor: ");
-                            String cpfProfessorAtribuir = scanner.nextLine();
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaAtribuir = scanner.nextLine();
-
-                            ProfessorDAO professorDAO6 = new ProfessorDAO();
-                            professorDAO6.atribuirProfessor(cpfProfessorAtribuir, codigoDisciplinaAtribuir);
-
-                            System.out.println("Professor atribuído com sucesso!");
-                            break;
-                        case 7:
-                            break;
-                    }
-                    break;
-                case 3:
-                    // Menu de Disciplinas (para não se perder)
-                    System.out.println("Menu de Disciplinas");
-                    System.out.println("1. Cadastrar Disciplina");
-                    System.out.println("2. Listar Disciplinas");
-                    System.out.println("3. Buscar Disciplina");
-                    System.out.println("4. Atualizar Disciplina");
-                    System.out.println("5. Excluir Disciplina");
-                    System.out.println("6. Voltar");
-
-                    int opcaoDisciplina = scanner.nextInt();
-                    scanner.nextLine();
-
-                    switch (opcaoDisciplina) {
-                        case 1:
-                            System.out.print("Digite o nome da disciplina: ");
-                            String nomeDisciplina = scanner.nextLine();
-                            System.out.print("Digite o tipo da disciplina (TEÓRICA ou PRÁTICA): ");
-                            TipoDisciplina tipoDisciplina = TipoDisciplina.valueOf(scanner.nextLine().toUpperCase());
-                            System.out.print("Digite a carga horária da disciplina: ");
-                            int cargaHoraria = scanner.nextInt();
+                            System.out.print("Digite uma opção:");
+                            int opcaoAluno = scanner.nextInt();
                             scanner.nextLine();
-                            System.out.print("Digite o nome do professor: ");
-                            String professor = scanner.nextLine();
-                            System.out.print("Digite o horário das aulas: ");
-                            String horarioAulas = scanner.nextLine();
 
-                            DisciplinaConcreta disciplina = new DisciplinaConcreta(nomeDisciplina, tipoDisciplina, cargaHoraria, professor, horarioAulas);
-                            DisciplinaCoDAO disciplinaConcretaDAO = new DisciplinaCoDAO();
-                            disciplinaConcretaDAO.addDisciplina(disciplina);
+                            try {
+                                switch (opcaoAluno) {
+                                    case 1:
+                                        System.out.print("Digite o nome do aluno: ");
+                                        String nomeAluno = scanner.nextLine();
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAluno = scanner.nextLine();
+                                        System.out.print("Digite o telefone do aluno: ");
+                                        String telefoneAluno = scanner.nextLine();
+                                        System.out.print("Digite o e-mail do aluno: ");
+                                        String emailAluno = scanner.nextLine();
+                                        System.out.print("Digite o endereco do aluno: ");
+                                        String endereco = scanner.nextLine();
+                                        System.out.print("Digite o ano de ingresso do aluno: ");
+                                        int anoIngresso = scanner.nextInt();
 
-                            System.out.println("Disciplina cadastrada com sucesso!");
-                            break;
-                        case 2:
-                            // Listar Disciplinas
-                            DisciplinaCoDAO disciplinaConcretaDAO2 = new DisciplinaCoDAO();
-                            List<DisciplinaConcreta> disciplinas = disciplinaConcretaDAO2.listarDisciplinasConcretas();
+                                        aluno = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoIngresso);
+                                        alunos.add(aluno);
 
-                            for (Disciplina d : disciplinas) {
-                                System.out.println(d.getNome());
+                                        System.out.println("Aluno registrado com sucesso!");
+                                        break;
+                                    case 2:
+                                        for (Aluno a : alunos) {
+                                            System.out.println(a.getNome() + " - " + a.getCpf());
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAlunoBuscar = scanner.nextLine();
+
+                                        for (Aluno a : alunos) {
+                                            if (a.getCpf().equals(cpfAlunoBuscar)) {
+                                                System.out.println(a.getNome() + " - " + a.getCpf());
+                                            }
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAlunoAtualizar = scanner.nextLine();
+                                        System.out.print("Digite o novo nome do aluno: ");
+                                        String nomeAlunoAtualizar = scanner.nextLine();
+                                        System.out.print("Digite o novo e-mail do aluno: ");
+                                        String emailAlunoAtualizar = scanner.nextLine();
+
+                                        for (Aluno a : alunos) {
+                                            if (a.getCpf().equals(cpfAlunoAtualizar)) {
+                                                a.setNome(nomeAlunoAtualizar);
+                                                a.setEmail(emailAlunoAtualizar);
+                                            }
+                                        }
+
+                                        System.out.println("Aluno atualizado com sucesso!");
+                                        break;
+                                    case 5:
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAlunoExcluir = scanner.nextLine();
+
+                                        for (Aluno a : alunos) {
+                                            if (a.getCpf().equals(cpfAlunoExcluir)) {
+                                                alunos.remove(a);
+                                            }
+                                        }
+
+                                        System.out.println("Aluno excluído com sucesso!");
+                                        break;
+
+                                    case 6:
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAlunoMatricular = scanner.nextLine();
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaMatricular = scanner.nextLine();
+
+                                        for (Aluno a : alunos) {
+                                            if (a.getCpf().equals(cpfAlunoMatricular)) {
+                                                for (Disciplina d : disciplinas) {
+                                                    if (d.getNome().equals(codigoDisciplinaMatricular)) {
+                                                        a.getDisciplinas().add(d);
+                                                        System.out.println("Aluno matriculado na disciplina com sucesso!");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 7:
+                                        System.out.print("Digite o CPF do aluno: ");
+                                        String cpfAlunoDesmatricular = scanner.nextLine();
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaDesmatricular = scanner.nextLine();
+
+                                        for (Aluno a : alunos) {
+                                            if (a.getCpf().equals(cpfAlunoDesmatricular)) {
+                                                for (Disciplina d : disciplinas) {
+                                                    if (d.getNome().equals(codigoDisciplinaDesmatricular)) {
+                                                        a.getDisciplinas().remove(d);
+                                                        System.out.println("Aluno desmatriculado da disciplina com sucesso!");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 8:
+                                        menuAlunos = false;
+                                        break;
+                                    default:
+                                        System.out.println("Opção inválida. Tente novamente.");
+                                }
+                            } catch (Exception e) {
+                                System.err.println("Erro no menu de alunos: " + e.getMessage());
+                                scanner.nextLine();
                             }
-                            break;
-                        case 3:
-                            // Buscar Disciplina
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaBuscar = scanner.nextLine();
+                        }
+                        break;
+                    case 2:
+                        boolean menuProfessores = true;
+                        while (menuProfessores) {
+                            System.out.println("Menu de Professores");
+                            System.out.println("1. Cadastrar Professor");
+                            System.out.println("2. Listar Professores");
+                            System.out.println("3. Buscar Professor");
+                            System.out.println("4. Atualizar Professor");
+                            System.out.println("5. Excluir Professor");
+                            System.out.println("6. Atribuir Professor a Disciplina");
+                            System.out.println("7. Voltar");
 
-                            DisciplinaCoDAO disciplinaConcretaDAO3 = new DisciplinaCoDAO();
-                            Disciplina disciplinaBuscar = disciplinaConcretaDAO3.econtrarDisciplinaporNome(codigoDisciplinaBuscar);
+                            System.out.print("Digite uma opção:");
+                            int opcaoProfessor = scanner.nextInt();
+                            scanner.nextLine();
 
-                            if (disciplinaBuscar != null) {
-                                System.out.println(disciplinaBuscar.getNome());
-                            } else {
-                                System.out.println("Disciplina não encontrada!");
-                            }
-                            break;
-                        case 4:
-                            // Atualizar Disciplina
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaAtualizar = scanner.nextLine();
-                            System.out.print("Digite o novo nome da disciplina: ");
-                            String nomeDisciplinaAtualizar = scanner.nextLine();
+                            try {
+                                switch (opcaoProfessor) {
+                                    case 1:
+                                        System.out.print("Digite o nome do professor: ");
+                                        String nomeProfessor = scanner.nextLine();
+                                        System.out.print("Digite o CPF do professor: ");
+                                        String cpfProfessor = scanner.nextLine();
+                                        System.out.print("Digite o departamento do professor: ");
+                                        String departamentoProfessor = scanner.nextLine();
 
-                            DisciplinaCoDAO disciplinaConcretaDAO4 = new DisciplinaCoDAO();
-                            DisciplinaConcreta disciplinaAtualizar = (DisciplinaConcreta) disciplinaConcretaDAO4.econtrarDisciplinaporNome(codigoDisciplinaAtualizar);
-                            if (disciplinaAtualizar != null) {
-                                disciplinaAtualizar.setNome(nomeDisciplinaAtualizar);
-                                disciplinaConcretaDAO4.atualizarDisciplina(disciplinaAtualizar);
-                                System.out.println("Disciplina atualizada com sucesso!");
-                            } else {
-                                System.out.println("Disciplina não encontrada!");
+                                        Professor professor = new Professor(nomeProfessor, cpfProfessor, departamentoProfessor);
+                                        professores.add(professor);
+
+                                        System.out.println("Professor cadastrado com sucesso!");
+                                        break;
+                                    case 2:
+                                        for (Professor p : professores) {
+                                            System.out.println(p.getNome() + " - " + p.getCpf());
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.print("Digite o CPF do professor: ");
+                                        String cpfProfessorBuscar = scanner.nextLine();
+
+                                        for (Professor p : professores) {
+                                            if (p.getCpf().equals(cpfProfessorBuscar)) {
+                                                System.out.println(p.getNome() + " - " + p.getCpf());
+                                            }
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.print("Digite o CPF do professor: ");
+                                        String cpfProfessorAtualizar = scanner.nextLine();
+                                        System.out.print("Digite o novo nome do professor: ");
+                                        String nomeProfessorAtualizar = scanner.nextLine();
+                                        System.out.print("Digite o novo e-mail do professor: ");
+                                        String emailProfessorAtualizar = scanner.nextLine();
+
+                                        for (Professor p : professores) {
+                                            if (p.getCpf().equals(cpfProfessorAtualizar)) {
+                                                p.setNome(nomeProfessorAtualizar);
+                                                p.setEmail(emailProfessorAtualizar);
+                                            }
+                                        }
+
+                                        System.out.println("Professor atualizado com sucesso!");
+                                        break;
+                                    case 5:
+                                        System.out.print("Digite o CPF do professor: ");
+                                        String cpfProfessorExcluir = scanner.nextLine();
+
+                                        for (Professor p : professores) {
+                                            if (p.getCpf().equals(cpfProfessorExcluir)) {
+                                                professores.remove(p);
+                                            }
+                                        }
+
+                                        System.out.println("Professor excluído com sucesso!");
+                                        break;
+                                    case 6:
+                                        System.out.print("Digite o CPF do professor: ");
+                                        String cpfProfessorAtribuir = scanner.nextLine();
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaAtribuir = scanner.nextLine();
+
+                                        for (Professor p : professores) {
+                                            if (p.getCpf().equals(cpfProfessorAtribuir)) {
+                                                for (Disciplina d : disciplinas) {
+                                                    if (d.getNome().equals(codigoDisciplinaAtribuir)) {
+                                                        p.getDisciplinas().add(d);
+                                                        System.out.println("Professor atribuído à disciplina com sucesso!");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 7:
+                                        menuProfessores = false;
+                                        break;
+                                    default:
+                                        System.out.println("Opção inválida. Tente novamente.");
+                                }
+                            } catch (Exception e) {
+                                System.err.println("Erro no menu de professores: " + e.getMessage());
+                                scanner.nextLine();
                             }
-                            break;
-                        case 5:
-                            System.out.print("Digite o código da disciplina: ");
-                            String codigoDisciplinaExcluir = scanner.nextLine();
-                            DisciplinaCoDAO disciplinaConcretaDAO5 = new DisciplinaCoDAO();
-                            Disciplina disciplinaExcluir = disciplinaConcretaDAO5.econtrarDisciplinaporNome(codigoDisciplinaExcluir);
-                            if (disciplinaExcluir != null) {
-                                disciplinaConcretaDAO5.removeDisciplina(disciplinaExcluir);
-                                System.out.println("Disciplina excluída com sucesso!");
-                            } else {
-                                System.out.println("Disciplina não encontrada!");
+                        }
+                        break;
+                    case 3:
+                        boolean menuDisciplinas = true;
+                        while (menuDisciplinas) {
+                            System.out.println("Menu de Disciplinas");
+                            System.out.println("1. Cadastrar Disciplina");
+                            System.out.println("2. Listar Disciplinas");
+                            System.out.println("3. Buscar Disciplina");
+                            System.out.println("4. Atualizar Disciplina");
+                            System.out.println("5. Excluir Disciplina");
+                            System.out.println("6. Voltar");
+
+                            System.out.print("Digite uma opção:");
+                            int opcaoDisciplina = scanner.nextInt();
+                            scanner.nextLine();
+
+                            try {
+                                switch (opcaoDisciplina) {
+                                    case 1:
+                                        System.out.print("Digite o nome da disciplina: ");
+                                        String nomeDisciplina = scanner.nextLine();
+                                        System.out.print("Digite o tipo da disciplina (TEÓRICA ou PRÁTICA): ");
+                                        TipoDisciplina tipoDisciplina = TipoDisciplina.valueOf(scanner.nextLine().toUpperCase());
+                                        System.out.print("Digite a carga horária da disciplina: ");
+                                        int cargaHoraria = scanner.nextInt();
+                                        scanner.nextLine();
+                                        System.out.print("Digite o nome do professor: ");
+                                        String professor = scanner.nextLine();
+                                        System.out.print("Digite o horário das aulas: ");
+                                        String horarioAulas = scanner.nextLine();
+
+                                        Disciplina disciplina = new DisciplinaConcreta(nomeDisciplina, tipoDisciplina, cargaHoraria, professor, horarioAulas);
+                                        disciplinas.add(disciplina);
+
+                                        System.out.println("Disciplina cadastrada com sucesso!");
+                                        break;
+                                    case 2:
+                                        for (Disciplina d : disciplinas) {
+                                            System.out.println(d.getNome());
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaBuscar = scanner.nextLine();
+
+                                        for (Disciplina d : disciplinas) {
+                                            if (d.getNome().equals(codigoDisciplinaBuscar)) {
+                                                System.out.println(d.getNome());
+                                            }
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaAtualizar = scanner.nextLine();
+                                        System.out.print("Digite o novo nome da disciplina: ");
+                                        String nomeDisciplinaAtualizar = scanner.nextLine();
+
+                                        for (Disciplina d : disciplinas) {
+                                            if (d.getNome().equals(codigoDisciplinaAtualizar)) {
+                                                d.setNome(nomeDisciplinaAtualizar);
+                                            }
+                                        }
+
+                                        System.out.println("Disciplina atualizada com sucesso!");
+                                        break;
+                                    case 5:
+                                        System.out.print("Digite o código da disciplina: ");
+                                        String codigoDisciplinaExcluir = scanner.nextLine();
+
+                                        for (Disciplina d : disciplinas) {
+                                            if (d.getNome().equals(codigoDisciplinaExcluir)) {
+                                                disciplinas.remove(d);
+                                            }
+                                        }
+
+                                        System.out.println("Disciplina excluída com sucesso!");
+                                        break;
+                                    case 6:
+                                        menuDisciplinas = false;
+                                        break;
+                                    default:
+                                        System.out.println("Opção inválida. Tente novamente.");
+                                }
+                            } catch (Exception e) {
+                                System.err.println("Erro no menu de disciplinas: " + e.getMessage());
+                                scanner.nextLine();
                             }
-                            break;
-                        case 6:
-                            // Voltar
-                            break;
-                        default:
-                            System.out.println("Opção inválida. Tente novamente.");
-                    }
-                    break;
+                        }
+                        break;
+                }
+            } catch (Exception e) {
+                System.err.println("Erro no menu geral: " + e.getMessage());
+                scanner.nextLine();
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Erro de entrada de dados. Tente novamente.");
-        } catch (Exception e) {
-            System.out.println("Erro inesperado: " + e.getMessage());
         }
+        scanner.close();
     }
 }

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Professor extends Pessoa implements ICadastrar, IConsultar {
+    private String email;
     private String departamento;
     private Set<Disciplina> disciplinas;
 
@@ -18,6 +19,9 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         this.disciplinas = new HashSet<>();
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Set<Disciplina> getDisciplinas() {
         return disciplinas;

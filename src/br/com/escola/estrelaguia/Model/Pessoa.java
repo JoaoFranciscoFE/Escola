@@ -13,6 +13,10 @@ public abstract class Pessoa {
         this.tipo = tipo;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }

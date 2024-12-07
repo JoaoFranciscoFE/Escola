@@ -45,71 +45,12 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
         this.email = email;
     }
 
-    public void alterarStatusMatricula(StatusMatricula status) {
-        this.statusMatricula = status;
-    }
-
     public StatusMatricula getStatusMatricula() {
         return statusMatricula;
     }
 
     public void setStatusMatricula(StatusMatricula statusMatricula) {
         this.statusMatricula = statusMatricula;
-    }
-
-    public Set<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
-    public void adicionarDisciplina(Disciplina disciplina) {
-        disciplinas.add(disciplina);
-    }
-
-    public void calcularMediaGeral() {
-        if (disciplinas.isEmpty()) {
-            System.out.println("Aluno não está matriculado em nenhuma disciplina.");
-            this.mediaGeral = 0.0;
-            return;
-        }
-
-        double somaNotas = 0;
-        int totalNotas = 0;
-
-        for (Disciplina disciplina : disciplinas) {
-            for (Nota nota : disciplina.getNotas()) {
-                somaNotas += nota.getValor();
-                totalNotas++;
-            }
-        }
-
-        this.mediaGeral = totalNotas > 0 ? somaNotas / totalNotas : 0.0;
-    }
-
-    public void registrarFalta() {
-        this.totalFaltas++;
-    }
-
-    public String verificarSituacaoAluno() {
-        if (this.totalFaltas > 10) {
-            return "Aluno está com muitas faltas!";
-        } else {
-            return "Aluno está com a frequência em dia.";
-        }
-    }
-
-    public void atualizarEndereco(String novoEndereco) {
-        this.endereco = novoEndereco;
-        System.out.println("Endereço atualizado com sucesso para: " + novoEndereco);
-    }
-
-    public void exibirHistoricoAcademico() {
-        System.out.println("Histórico do Aluno: " + getNome());
-        for (Disciplina disciplina : disciplinas) {
-            System.out.println("Disciplina: " + disciplina.getNome());
-            for (Nota nota : disciplina.getNotas()) {
-                System.out.println("  Nota: " + nota.getValor() + " - Tipo: " + nota.getTipo());
-            }
-        }
     }
 
     @Override
@@ -167,6 +108,10 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
 
         // Calcula e retorna a média
         return somaNotas / quantidadeNotas;
+    }
+
+    public Set<Disciplina> getDisciplinas() {
+        return disciplinas;
     }
 
     @Override

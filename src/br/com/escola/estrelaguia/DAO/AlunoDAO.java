@@ -1,10 +1,7 @@
 package br.com.escola.estrelaguia.DAO;
 
 import br.com.escola.estrelaguia.Enums.StatusMatricula;
-import br.com.escola.estrelaguia.Model.Aluno;
-import br.com.escola.estrelaguia.Model.Disciplina;
-import br.com.escola.estrelaguia.Model.DisciplinaEletiva;
-import br.com.escola.estrelaguia.Model.DisciplinaObrigatoria;
+import br.com.escola.estrelaguia.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +38,6 @@ public class AlunoDAO {
         aluno.setStatusMatricula(StatusMatricula.DESMATRICULADO);
     }
 
-    public List<Disciplina> listarDisciplinasAluno(Aluno aluno) {
-        List<Disciplina> disciplinas = new ArrayList<>();
-        disciplinas.add(new DisciplinaObrigatoria("Matemática", 10, "João", "Sexta", "Ciências"));
-        disciplinas.add(new DisciplinaEletiva("Português", true, "Literatura", 4, "Livros"));
-        return disciplinas;
-    }
-
-    public String verificarSituacaoAluno(Aluno aluno) {
-        if (aluno.isAtivo()) {
-            return "Matriculado";
-        } else {
-            return "Desmatriculado";
-        }
-    }
 
     public void atualizarAluno(String cpf, String novoNome, String novoEmail) {
         Aluno aluno = buscarAlunoPorCpf(cpf);
@@ -63,10 +46,17 @@ public class AlunoDAO {
             aluno.setEmail(novoEmail);
         }
     }
+
     public void excluirAluno(String cpf) {
         Aluno aluno = buscarAlunoPorCpf(cpf);
         if (aluno != null) {
             alunos.remove(aluno);
         }
+    }
+
+    public void avaliar(Aluno aluno) {
+        AvaliacaoFinal avaliacaoFinal = new AvaliacaoFinal("Avaliação Final", 1.0);
+        double notaFinal = avaliacaoFinal.getNotaFinal();
+        System.out.println("Nota final: " + notaFinal);
     }
 }
