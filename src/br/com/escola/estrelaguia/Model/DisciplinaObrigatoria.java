@@ -58,9 +58,6 @@ public class DisciplinaObrigatoria extends Disciplina {
         return alunosMatriculados;
     }
 
-    // Métodos úteis
-
-    // 1. Adicionar aluno à disciplina
     public void adicionarAluno(Aluno aluno) {
         if (!alunosMatriculados.contains(aluno)) {
             alunosMatriculados.add(aluno);
@@ -70,7 +67,6 @@ public class DisciplinaObrigatoria extends Disciplina {
         }
     }
 
-    // 2. Remover aluno da disciplina
     public void removerAluno(Aluno aluno) {
         if (alunosMatriculados.contains(aluno)) {
             alunosMatriculados.remove(aluno);
@@ -80,7 +76,6 @@ public class DisciplinaObrigatoria extends Disciplina {
         }
     }
 
-    // 3. Exibir lista de alunos matriculados
     public void listarAlunosMatriculados() {
         System.out.println("Alunos matriculados na disciplina " + getNome() + ":");
         for (Aluno aluno : alunosMatriculados) {
@@ -88,13 +83,11 @@ public class DisciplinaObrigatoria extends Disciplina {
         }
     }
 
-    // 4. Verificar carga horária restante
     public int cargaHorariaRestante(int aulasConcluidas) {
         int restante = cargaHoraria - aulasConcluidas;
         return Math.max(restante, 0);
     }
 
-    // 5. Sobrescrevendo `detalhesDisciplina` para incluir mais informações
     @Override
     public void detalhesDisciplina() {
         System.out.println("Disciplina Obrigatória: " + getNome());

@@ -8,11 +8,15 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static br.com.escola.estrelaguia.Model.Turma.buscarTurmaPorNome;
+
 public class Main {
     private static List<Aluno> alunos = new ArrayList<>();
     private static List<Professor> professores = new ArrayList<>();
     private static List<Disciplina> disciplinas = new ArrayList<>();
-
+    public static List<Turma> turmas = new ArrayList<>();
+    static Disciplina disciplina = new DisciplinaObrigatoria("Ciêncais", 10, "João", "Sexta", "Ciências");
+    static Professor professor = new Professor("João", "1234", "Ciências");
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -45,8 +49,9 @@ public class Main {
             System.out.println("\n=== MENU ALUNO ===");
             System.out.println("1. Exibir Dados");
             System.out.println("2. Listar Disciplinas");
-            System.out.println("3. Verificar Situação do Aluno");
-            System.out.println("4. Retornar ao Menu Principal");
+            System.out.println("3. Listar Turmas");
+            System.out.println("4. Verificar Situação do Aluno");
+            System.out.println("5. Retornar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
             int op = scanner.nextInt();
 
@@ -58,9 +63,12 @@ public class Main {
                     listarDisciplinasAluno(scanner);
                     break;
                 case 3:
-                    verificarSituacaoAluno(scanner);
+                    listarDisciplinasAluno(scanner);
                     break;
                 case 4:
+                    verificarSituacaoAluno(scanner);
+                    break;
+                case 5:
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -75,13 +83,11 @@ public class Main {
             System.out.println("2. Cadastrar Aluno");
             System.out.println("3. Matricular Aluno");
             System.out.println("4. Desmatricular Aluno");
-            System.out.println("5. Adicionar Disciplina");
-            System.out.println("6. Atribuir Disciplina");
-            System.out.println("7. Remover Disciplina");
-            System.out.println("8. Exibir Dados");
-            System.out.println("9. Listar Disciplinas");
-            System.out.println("10. Matricular Aluno em Disciplina");
-            System.out.println("11. Retornar ao Menu Principal");
+            System.out.println("5. Adicionar Turma");
+            System.out.println("6. Remover Turma");
+            System.out.println("7. Exibir Dados");
+            System.out.println("8. Listar Disciplinas");
+            System.out.println("0. Retornar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
 
             try {
@@ -91,13 +97,11 @@ public class Main {
                     case 2 -> cadastrarAluno(scanner);
                     case 3 -> matricularAluno(scanner);
                     case 4 -> desmatricularAluno(scanner);
-                    case 5 -> adicionarDisciplina(scanner);
-                    case 6 -> atribuirDisciplinaAoProfessor(scanner);
-                    case 7 -> removerDisciplinaDoProfessor(scanner);
-                    case 8 -> exibirDadosProfessor(scanner);
-                    case 9 -> listarDisciplinasProfessor(scanner);
-                    case 10 -> matricularAlunoEmDisciplina(scanner);
-                    case 11 -> {
+                    case 5 -> adicionarTurma(scanner);
+                    case 6 -> removerTurma(scanner);
+                    case 7 -> exibirDadosProfessor(scanner);
+                    case 8 -> listarDisciplinasProfessor(scanner);
+                    case 0 -> {
                         System.out.println("Retornando ao Menu Principal...");
                         return;
                     }
@@ -110,7 +114,31 @@ public class Main {
         }
     }
 
+    private static void adicionarTurma(Scanner scanner) {
+        System.out.print("Nome da Turma: ");
+        String nomeTurma = scanner.nextLine();
+        System.out.print("Descrição da Turma: ");
+        String descricao = scanner.nextLine();
 
+        Turma turma = new Turma(nomeTurma, disciplina, professor, 10);
+        turmas.add(turma);
+        System.out.println("Turma cadastrada com sucesso!");
+    }
+
+
+
+    private static void removerTurma(Scanner scanner) {
+        System.out.print("Digite o nome da turma: ");
+        String nomeTurma = scanner.nextLine();
+
+        Turma turma = buscarTurmaPorNome(nomeTurma, turmas);
+        if (turma != null) {
+            turmas.remove(turma);
+            System.out.println("Turma removida com sucesso!");
+        } else {
+            System.out.println("Turma não encontrada.");
+        }
+    }
 
     private static void cadastrarProfessor(Scanner scanner) {
         System.out.print("Nome: ");
@@ -343,6 +371,140 @@ public class Main {
             }
         } else {
             System.out.println("Aluno não encontrado.");
+        }
+    }
+    private static void criarDisciplinaEletiva(Scanner scanner) {
+        System.out.print("Nome da Disciplina Eletiva: ");
+        String nome = scanner.nextLine();
+        System.out.print("Requer Aprovação (true/false): ");
+        boolean requerAprovacao = scanner.nextBoolean();
+        scanner.nextLine();
+        System.out.print("Área de Estudo: ");
+        String areaDeEstudo = scanner.nextLine();
+        System.out.print("Duração (semanas): ");
+        int duracaoSemanas = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Recursos Extras: ");
+        String recursosExtras = scanner.nextLine();
+
+        DisciplinaEletiva eletiva = new DisciplinaEletiva(nome, requerAprovacao, areaDeEstudo, duracaoSemanas, recursosExtras);
+        disciplinas.add(eletiva);
+        System.out.println("Disciplina Eletiva criada com sucesso!");
+    }
+
+    private static void listarDisciplinasEletivas() {
+        System.out.println("\n=== DISCIPLINAS ELETIVAS ===");
+        disciplinas.stream()
+                .filter(d -> d instanceof DisciplinaEletiva)
+                .forEach(d -> {
+                    d.detalhesDisciplina();
+                    System.out.println("-----------------------------");
+                });
+    }
+    private static void gerenciarAlunosInteressados(Scanner scanner) {
+        System.out.print("Digite o nome da disciplina eletiva: ");
+        String nomeDisciplina = scanner.nextLine();
+
+        DisciplinaEletiva eletiva = (DisciplinaEletiva) disciplinas.stream()
+                .filter(d -> d instanceof DisciplinaEletiva && d.getNome().equalsIgnoreCase(nomeDisciplina))
+                .findFirst()
+                .orElse(null);
+
+        if (eletiva != null) {
+            System.out.println("\n=== GERENCIAR ALUNOS INTERESSADOS ===");
+            System.out.println("1. Listar Alunos Interessados");
+            System.out.println("2. Registrar Interesse de Aluno");
+            System.out.println("3. Retornar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpar buffer
+
+            switch (opcao) {
+                case 1 -> eletiva.listarInteressados();
+                case 2 -> {
+                    System.out.print("Digite o CPF do aluno: ");
+                    String cpf = scanner.nextLine();
+                    Aluno aluno = buscarAlunoPorCpf(cpf);
+                    if (aluno != null) {
+                        eletiva.registrarInteresse(aluno);
+                    } else {
+                        System.out.println("Aluno não encontrado.");
+                    }
+                }
+                case 3 -> System.out.println("Retornando...");
+                default -> System.out.println("Opção inválida.");
+            }
+        } else {
+            System.out.println("Disciplina Eletiva não encontrada.");
+        }
+    }
+
+    public static void cadastrarTurma(Scanner scanner) {
+        System.out.print("Nome da Turma: ");
+        String nomeTurma = scanner.nextLine();
+        System.out.print("Nome da Disciplina: ");
+        String nomeDisciplina = scanner.nextLine();
+
+        Disciplina disciplina = buscarDisciplinaPorNome(nomeDisciplina);
+        if (disciplina != null) {
+            System.out.print("CPF do Professor Responsável: ");
+            String cpfProfessor = scanner.nextLine();
+
+            Professor professor = buscarProfessorPorCpf(cpfProfessor);
+            if (professor != null) {
+                System.out.print("Capacidade máxima: ");
+                int capacidade = scanner.nextInt();
+                scanner.nextLine();
+                Turma novaTurma = new Turma(nomeTurma, disciplina, professor, capacidade);
+                System.out.println("Turma cadastrada com sucesso!");
+            } else {
+                System.out.println("Professor não encontrado.");
+            }
+        } else {
+            System.out.println("Disciplina não encontrada.");
+        }
+    }
+
+    public static void adicionarAlunoTurma(Scanner scanner, List<Turma> turmas) {
+        System.out.print("Nome da Turma: ");
+        String nomeTurma = scanner.nextLine();
+        Turma turma = buscarTurmaPorNome(nomeTurma, turmas);
+
+        if (turma != null) {
+            System.out.print("CPF do Aluno: ");
+            String cpfAluno = scanner.nextLine();
+            Aluno aluno = buscarAlunoPorCpf(cpfAluno);
+
+            if (aluno != null) {
+                if (turma.adicionarAluno(aluno)) {
+                    System.out.println("Aluno adicionado com sucesso.");
+                }
+            } else {
+                System.out.println("Aluno não encontrado.");
+            }
+        } else {
+            System.out.println("Turma não encontrada.");
+        }
+    }
+    public static void removerAlunoTurma(Scanner scanner, List<Turma> turmas) {
+        System.out.print("Nome da Turma: ");
+        String nomeTurma = scanner.nextLine();
+        Turma turma = buscarTurmaPorNome(nomeTurma, turmas);
+
+        if (turma != null) {
+            System.out.print("CPF do Aluno: ");
+            String cpfAluno = scanner.nextLine();
+            Aluno aluno = buscarAlunoPorCpf(cpfAluno);
+
+            if (aluno != null) {
+                if (turma.removerAluno(aluno)) {
+                    System.out.println("Aluno removido com sucesso.");
+                }
+            } else {
+                System.out.println("Aluno não encontrado.");
+            }
+        } else {
+            System.out.println("Turma não encontrada.");
         }
     }
 }

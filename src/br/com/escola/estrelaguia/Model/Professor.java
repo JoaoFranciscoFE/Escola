@@ -5,7 +5,7 @@ import br.com.escola.estrelaguia.Contracts.IConsultar;
 import br.com.escola.estrelaguia.Enums.TipoPessoa;
 
 import java.util.HashSet;
-import java.util.Optional;
+
 import java.util.Set;
 
 public class Professor extends Pessoa implements ICadastrar, IConsultar {
@@ -18,14 +18,6 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         this.disciplinas = new HashSet<>();
     }
 
-    // Métodos getters e setters básicos
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
 
     public Set<Disciplina> getDisciplinas() {
         return disciplinas;
@@ -48,6 +40,7 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         }
     }
 
+
     @Override
     public void exibirDados() {
         System.out.println("Professor: " + getNome() + " | CPF: " + getCpf() + " | Departamento: " + departamento);
@@ -59,38 +52,6 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         } else {
             System.out.println("Nenhuma disciplina atribuída.");
         }
-    }
-
-    public int contarDisciplinas() {
-        return disciplinas.size();
-    }
-
-
-    public boolean ensinaDisciplina(Disciplina disciplina) {
-        return disciplinas.contains(disciplina);
-    }
-
-    public Disciplina buscarDisciplinaPorNome(String nome) {
-        Optional<Disciplina> disciplinaEncontrada = disciplinas.stream()
-                .filter(disciplina -> disciplina.getNome().equalsIgnoreCase(nome))
-                .findFirst();
-        return disciplinaEncontrada.orElse(null);
-    }
-
-    public String listarDisciplinas() {
-        if (disciplinas.isEmpty()) {
-            return "Nenhuma disciplina atribuída.";
-        }
-        StringBuilder lista = new StringBuilder();
-        for (Disciplina disciplina : disciplinas) {
-            lista.append(disciplina.getNome()).append(", ");
-        }
-        return lista.substring(0, lista.length() - 2);
-    }
-
-    public void trocarDepartamento(String novoDepartamento) {
-        System.out.println("Departamento do professor " + getNome() + " alterado de " + departamento + " para " + novoDepartamento + ".");
-        this.departamento = novoDepartamento;
     }
 
     @Override
