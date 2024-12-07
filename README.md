@@ -32,7 +32,7 @@ O sistema é estruturado em classes que representam os principais elementos do s
 ## Como Usar
 
 1. Compile o código com `javac`.
-2. Execute o sistema com `java br.com.escola.estrelaguia.Main.Main`.
+2. Execute o sistema com `java br.com.escola.estrelaguia.Main.Main.java`.
 3. Utilize o menu interativo para adicionar/remover alunos, professores, disciplinas e realizar matrículas e avaliações.
 
 ## Requisitos
