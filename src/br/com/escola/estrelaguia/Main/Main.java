@@ -2,6 +2,7 @@ package br.com.escola.estrelaguia.Main;
 
 
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
+import br.com.escola.estrelaguia.Enums.TipoNota;
 import br.com.escola.estrelaguia.Model.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Aluno aluno = null;
+        Aluno aluno;
         boolean menuInicial = true;
         while (menuInicial) {
             try {
@@ -62,8 +63,25 @@ public class Main {
                                         String endereco = scanner.nextLine();
                                         System.out.print("Digite o ano de ingresso do aluno: ");
                                         int anoIngresso = scanner.nextInt();
+                                        scanner.nextLine();
 
-                                        aluno = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoIngresso);
+                                        System.out.println("Selecione o tipo de nota do aluno:");
+                                        System.out.println("1 - Nota Parcial");
+                                        System.out.println("2 - Nota Final");
+                                        int tipoNota = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        TipoNota nota;
+                                        if (tipoNota == 1) {
+                                            nota = TipoNota.PARCIAL;
+                                        } else if (tipoNota == 2) {
+                                            nota = TipoNota.FINAL;
+                                        } else {
+                                            System.out.println("Tipo de nota inválido. Usando nota parcial como padrão.");
+                                            nota = TipoNota.PARCIAL;
+                                        }
+
+                                        aluno = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoIngresso, nota);
                                         alunos.add(aluno);
 
                                         System.out.println("Aluno registrado com sucesso!");
@@ -180,8 +198,10 @@ public class Main {
                                         String cpfProfessor = scanner.nextLine();
                                         System.out.print("Digite o departamento do professor: ");
                                         String departamentoProfessor = scanner.nextLine();
+                                        System.out.print("Digite o email do professor: ");
+                                        String emailProfessor = scanner.nextLine();
 
-                                        Professor professor = new Professor(nomeProfessor, cpfProfessor, departamentoProfessor);
+                                        Professor professor = new Professor(nomeProfessor, cpfProfessor, departamentoProfessor, emailProfessor);
                                         professores.add(professor);
 
                                         System.out.println("Professor cadastrado com sucesso!");
@@ -285,7 +305,7 @@ public class Main {
                                         System.out.print("Digite o horário das aulas: ");
                                         String horarioAulas = scanner.nextLine();
 
-                                        System.out.print("Digite o tipo de disciplina (CONCRETA ou ELETIVA): ");
+                                        System.out.print("Digite o tipo de disciplina (CONCRETA, ELETIVA ou OBRIGATÓRIA): ");
                                         String tipo = scanner.nextLine();
 
                                         if (tipo.equalsIgnoreCase("CONCRETA")) {
@@ -303,6 +323,12 @@ public class Main {
                                             String recursosExtras = scanner.nextLine();
 
                                             Disciplina disciplina = new DisciplinaEletiva(nomeDisciplina, requerAprovacao, areaDeEstudo, duracaoSemanas, recursosExtras);
+                                            disciplinas.add(disciplina);
+                                        } else if (tipo.equalsIgnoreCase("OBRIGATÓRIA")) {
+                                            System.out.print("Digite a descrição da disciplina: ");
+                                            String descricao = scanner.nextLine();
+
+                                            Disciplina disciplina = new DisciplinaObrigatoria(nomeDisciplina, cargaHoraria, professor, horarioAulas, descricao);
                                             disciplinas.add(disciplina);
                                         }
 

@@ -11,9 +11,7 @@ public abstract class Disciplina {
     int cargaHoraria;
     String professor;
     public String horarioAulas;
-    private List<String> materiais;
     private List<Nota> notas;
-    private int maximoAlunos;
     private List<Aluno> alunosMatriculados = new ArrayList<>();
 
     public Disciplina(String nome, TipoDisciplina tipo, int cargaHoraria, String professor, String horarioAulas) {
@@ -22,7 +20,6 @@ public abstract class Disciplina {
         this.cargaHoraria = cargaHoraria;
         this.professor = professor;
         this.horarioAulas = horarioAulas;
-        this.materiais = new ArrayList<>();
         this.notas = new ArrayList<>();
     }
 
@@ -40,10 +37,6 @@ public abstract class Disciplina {
 
     public List<Nota> getNotas() {
         return notas;
-    }
-
-    public int getMaximoAlunos() {
-        return maximoAlunos;
     }
 
     public List<Aluno> getAlunosMatriculados() {

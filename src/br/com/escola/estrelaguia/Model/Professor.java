@@ -13,10 +13,11 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
     private String departamento;
     private Set<Disciplina> disciplinas;
 
-    public Professor(String nome, String cpf, String departamento) {
+    public Professor(String nome, String cpf, String departamento, String email) {
         super(nome, cpf, TipoPessoa.PROFESSOR);
         this.departamento = departamento;
         this.disciplinas = new HashSet<>();
+        this.email = email;
     }
 
     public void setEmail(String email) {

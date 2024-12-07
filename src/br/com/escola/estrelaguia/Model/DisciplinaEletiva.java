@@ -20,10 +20,6 @@ public class DisciplinaEletiva extends Disciplina {
     }
 
 
-    public int vagasRestantes() {
-        return getMaximoAlunos() - getAlunosMatriculados().size();
-    }
-
 
     @Override
     public void detalhesDisciplina() {
@@ -32,6 +28,5 @@ public class DisciplinaEletiva extends Disciplina {
         System.out.println("Área de Estudo: " + areaDeEstudo);
         System.out.println("Duração: " + duracaoSemanas + " semanas");
         System.out.println("Recursos Extras: " + recursosExtras);
-        System.out.println("Vagas Restantes: " + vagasRestantes());
     }
 }

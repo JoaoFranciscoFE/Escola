@@ -4,7 +4,4 @@ public enum StatusMatricula {
     ATIVO,
     DESMATRICULADO;
 
-    public boolean isAtivo() {
-        return this == ATIVO;
-    }
 }

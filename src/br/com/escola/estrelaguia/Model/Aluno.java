@@ -6,6 +6,7 @@ import br.com.escola.estrelaguia.Contracts.IConsultar;
 import br.com.escola.estrelaguia.Contracts.IMatriculavel;
 import br.com.escola.estrelaguia.Enums.StatusMatricula;
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
+import br.com.escola.estrelaguia.Enums.TipoNota;
 import br.com.escola.estrelaguia.Enums.TipoPessoa;
 
 import java.util.HashSet;
@@ -20,8 +21,9 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
     private double mediaGeral;
     private int totalFaltas;
     private int anoDeIngresso;
+    private TipoNota tipo;
 
-    public Aluno(String nome, String cpf, String telefone, String email, String endereco, int anoDeIngresso) {
+    public Aluno(String nome, String cpf, String telefone, String email, String endereco, int anoDeIngresso, TipoNota tipoNota) {
         super(nome, cpf, TipoPessoa.ALUNO);
         this.statusMatricula = StatusMatricula.DESMATRICULADO;
         this.disciplinas = new HashSet<>();
@@ -31,22 +33,11 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
         this.mediaGeral = 0.0;
         this.totalFaltas = 0;
         this.anoDeIngresso = anoDeIngresso;
-    }
-
-    public boolean isAtivo() {
-        return statusMatricula == StatusMatricula.ATIVO;
+        this.tipo = tipoNota;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public StatusMatricula getStatusMatricula() {
-        return statusMatricula;
-    }
-
-    public void setStatusMatricula(StatusMatricula statusMatricula) {
-        this.statusMatricula = statusMatricula;
     }
 
     @Override

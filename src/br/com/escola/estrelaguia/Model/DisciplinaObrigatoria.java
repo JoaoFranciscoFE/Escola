@@ -21,71 +21,9 @@ public class DisciplinaObrigatoria extends Disciplina {
         this.alunosMatriculados = new ArrayList<>();
     }
 
-    // Getters e Setters
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public String getProfessorResponsavel() {
-        return professorResponsavel;
-    }
-
-    public void setProfessorResponsavel(String professorResponsavel) {
-        this.professorResponsavel = professorResponsavel;
-    }
-
-    public String getHorarioAulas() {
-        return horarioAulas;
-    }
-
-    public void setHorarioAulas(String horarioAulas) {
-        this.horarioAulas = horarioAulas;
-    }
-
-    public String getDescricaoConteudo() {
-        return descricaoConteudo;
-    }
-
-    public void setDescricaoConteudo(String descricaoConteudo) {
-        this.descricaoConteudo = descricaoConteudo;
-    }
 
     public List<Aluno> getAlunosMatriculados() {
         return alunosMatriculados;
-    }
-
-    public void adicionarAluno(Aluno aluno) {
-        if (!alunosMatriculados.contains(aluno)) {
-            alunosMatriculados.add(aluno);
-            System.out.println("Aluno " + aluno.getNome() + " matriculado com sucesso.");
-        } else {
-            System.out.println("O aluno " + aluno.getNome() + " já está matriculado nesta disciplina.");
-        }
-    }
-
-    public void removerAluno(Aluno aluno) {
-        if (alunosMatriculados.contains(aluno)) {
-            alunosMatriculados.remove(aluno);
-            System.out.println("Aluno " + aluno.getNome() + " removido da disciplina.");
-        } else {
-            System.out.println("O aluno " + aluno.getNome() + " não está matriculado nesta disciplina.");
-        }
-    }
-
-    public void listarAlunosMatriculados() {
-        System.out.println("Alunos matriculados na disciplina " + getNome() + ":");
-        for (Aluno aluno : alunosMatriculados) {
-            System.out.println(" - " + aluno.getNome());
-        }
-    }
-
-    public int cargaHorariaRestante(int aulasConcluidas) {
-        int restante = cargaHoraria - aulasConcluidas;
-        return Math.max(restante, 0);
     }
 
     @Override
