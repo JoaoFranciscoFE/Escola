@@ -8,9 +8,9 @@ import java.util.List;
 public abstract class Disciplina {
     private String nome;
     private TipoDisciplina tipo;
-    private int cargaHoraria;
-    private String professor;
-    private String horarioAulas;
+    int cargaHoraria;
+    String professor;
+    public String horarioAulas;
     private List<String> materiais;
     private List<Nota> notas;
     private int maximoAlunos;
@@ -30,8 +30,16 @@ public abstract class Disciplina {
         return nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public TipoDisciplina getTipo() {
         return tipo;
+    }
+
+    public void setTipo(TipoDisciplina tipo) {
+        this.tipo = tipo;
     }
 
     public int getCargaHoraria() {

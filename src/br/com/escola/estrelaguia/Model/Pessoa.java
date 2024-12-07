@@ -3,7 +3,7 @@ package br.com.escola.estrelaguia.Model;
 import br.com.escola.estrelaguia.Enums.TipoPessoa;
 
 public abstract class Pessoa {
-    private String nome;
+    String nome;
     private String cpf;
     private TipoPessoa tipo;
 
