@@ -45,7 +45,6 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         }
     }
 
-
     @Override
     public void exibirDados() {
         System.out.println("Professor: " + getNome() + " | CPF: " + getCpf() + " | Departamento: " + departamento);

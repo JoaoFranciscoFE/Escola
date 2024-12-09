@@ -1,6 +1,5 @@
 package br.com.escola.estrelaguia.Main;
 
-
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
 import br.com.escola.estrelaguia.Enums.TipoNota;
 import br.com.escola.estrelaguia.Model.*;
@@ -136,10 +135,13 @@ public class Main {
 
                                         for (Aluno a : alunos) {
                                             if (a.getCpf().equals(cpfAlunoMatricular)) {
-                                                disciplinas.stream()
-                                                        .filter(d -> d.getNome().equals(codigoDisciplinaMatricular))
-                                                        .forEach(a.getDisciplinas()::add);
-                                                System.out.println("Aluno matriculado na disciplina com sucesso!");
+                                                for (Disciplina d : disciplinas) {
+                                                    if (d.getNome().equals(codigoDisciplinaMatricular)) {
+                                                        a.getDisciplinas().add(d);
+                                                        System.out.println("Aluno matriculado na disciplina com sucesso!");
+                                                        break;
+                                                    }
+                                                }
                                             }
                                         }
                                         break;
@@ -323,9 +325,22 @@ public class Main {
                                             disciplina = new DisciplinaObrigatoria(nomeDisciplina, cargaHoraria, professor, horarioAulas, descricao);
                                         }
 
-                                        disciplinas.add(disciplina);
+                                        Professor professorResponsavel = null;
+                                        for (Professor p : professores) {
+                                            if (p.getNome().equals(professor)) {
+                                                professorResponsavel = p;
+                                                break;
+                                            }
+                                        }
+                                        if (professorResponsavel != null) {
+                                            professorResponsavel.adicionarDisciplina(disciplina);
+                                        } else {
+                                            System.out.println("Professor não encontrado");
+                                        }
+
                                         System.out.println("Disciplina cadastrada com sucesso!");
                                         break;
+
                                     case 2:
                                         for (Disciplina d : disciplinas) {
                                             System.out.println(d.getNome());
@@ -359,9 +374,28 @@ public class Main {
                                         System.out.print("Digite o código da disciplina: ");
                                         String codigoDisciplinaExcluir = scanner.nextLine();
 
-                                        disciplinas.removeIf(d -> d.getNome().equals(codigoDisciplinaExcluir));
+                                        Professor professorResponsavelExcluir = null;
+                                        Disciplina disciplinaExcluir = null;
 
-                                        System.out.println("Disciplina excluída com sucesso!");
+                                        for (Professor p : professores) {
+                                            for (Disciplina d : p.getDisciplinas()) {
+                                                if (d.getNome().equals(codigoDisciplinaExcluir)) {
+                                                    professorResponsavelExcluir = p;
+                                                    disciplinaExcluir = d;
+                                                    break;
+                                                }
+                                            }
+                                            if (professorResponsavelExcluir != null) {
+                                                break;
+                                            }
+                                        }
+
+                                        if (professorResponsavelExcluir != null) {
+                                            professorResponsavelExcluir.removerDisciplina(disciplinaExcluir);
+                                            System.out.println("Disciplina excluída com sucesso!");
+                                        } else {
+                                            System.out.println("Disciplina não encontrada");
+                                        }
                                         break;
                                     case 6:
                                         menuDisciplinas = false;
