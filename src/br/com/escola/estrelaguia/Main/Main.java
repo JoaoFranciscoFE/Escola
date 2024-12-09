@@ -33,16 +33,7 @@ public class Main {
                     case 1:
                         boolean menuAlunos = true;
                         while (menuAlunos) {
-                            System.out.println("Menu de Alunos");
-                            System.out.println("1. Cadastrar Aluno");
-                            System.out.println("2. Listar Alunos");
-                            System.out.println("3. Buscar Aluno");
-                            System.out.println("4. Atualizar Aluno");
-                            System.out.println("5. Excluir Aluno");
-                            System.out.println("6. Matricular Aluno em Disciplina");
-                            System.out.println("7. Desmatricular Aluno de Disciplina");
-                            System.out.println("8. Voltar");
-
+                            System.out.println("Menu de Alunos\n1. Cadastrar Aluno\n2. Listar Alunos\n3. Buscar Aluno\n4. Atualizar Aluno\n5. Excluir Aluno\n6. Matricular Aluno em Disciplina\n7. Desmatricular Aluno de Disciplina\n8. Voltar");
                             System.out.print("Digite uma opção:");
                             int opcaoAluno = scanner.nextInt();
                             scanner.nextLine();
@@ -173,14 +164,7 @@ public class Main {
                     case 2:
                         boolean menuProfessores = true;
                         while (menuProfessores) {
-                            System.out.println("Menu de Professores");
-                            System.out.println("1. Cadastrar Professor");
-                            System.out.println("2. Listar Professores");
-                            System.out.println("3. Buscar Professor");
-                            System.out.println("4. Atualizar Professor");
-                            System.out.println("5. Excluir Professor");
-                            System.out.println("6. Atribuir Professor a Disciplina");
-                            System.out.println("7. Voltar");
+                            System.out.println("Menu de Professores\n1. Cadastrar Professor\n2. Listar Professores\n3. Buscar Professor\n4. Atualizar Professor\n5. Excluir Professor\n6. Atribuir Professor a Disciplina\n7. Voltar");
 
                             System.out.print("Digite uma opção:");
                             int opcaoProfessor = scanner.nextInt();
@@ -275,14 +259,7 @@ public class Main {
                     case 3:
                         boolean menuDisciplinas = true;
                         while (menuDisciplinas) {
-                            System.out.println("Menu de Disciplinas");
-                            System.out.println("1. Cadastrar Disciplina");
-                            System.out.println("2. Listar Disciplinas");
-                            System.out.println("3. Buscar Disciplina");
-                            System.out.println("4. Atualizar Disciplina");
-                            System.out.println("5. Excluir Disciplina");
-                            System.out.println("6. Voltar");
-
+                            System.out.println("Menu de Disciplinas\n1. Cadastrar Disciplina\n2. Listar Disciplinas\n3. Buscar Disciplina\n4. Atualizar Disciplina\n5. Excluir Disciplina\n6. Voltar");
                             System.out.print("Digite uma opção:");
                             int opcaoDisciplina = scanner.nextInt();
                             scanner.nextLine();

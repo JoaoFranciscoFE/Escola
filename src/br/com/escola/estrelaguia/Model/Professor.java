@@ -23,6 +23,13 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public Set<Disciplina> getDisciplinas() {
         return disciplinas;
@@ -75,11 +82,5 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
         System.out.println("Professor " + getNome() + " cadastrado com sucesso!");
     }
 
-    public String getDepartamento() {
-        return departamento;
-    }
 
-    public String getEmail() {
-        return email;
-    }
 }
