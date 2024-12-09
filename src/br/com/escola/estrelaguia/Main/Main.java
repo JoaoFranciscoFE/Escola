@@ -8,6 +8,7 @@ import br.com.escola.estrelaguia.Model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     static List<Aluno> alunos = new ArrayList<>();
@@ -16,7 +17,6 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Aluno aluno;
         boolean menuInicial = true;
         while (menuInicial) {
             try {
@@ -81,14 +81,15 @@ public class Main {
                                             nota = TipoNota.PARCIAL;
                                         }
 
-                                        aluno = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoIngresso, nota);
-                                        alunos.add(aluno);
+                                        Aluno alunocriar = new Aluno(nomeAluno, cpfAluno, telefoneAluno, emailAluno, endereco, anoIngresso, nota);
+                                        alunos.add(alunocriar);
 
                                         System.out.println("Aluno registrado com sucesso!");
                                         break;
                                     case 2:
-                                        for (Aluno a : alunos) {
-                                            System.out.println(a.getNome() + " - " + a.getCpf());
+                                        System.out.println("Lista de Alunos:");
+                                        for (Aluno alunolista : alunos) {
+                                            System.out.println("Nome: " + alunolista.getNome() + ", CPF: " + alunolista.getCpf() + ", Telefone: " + alunolista.getTelefone() + ", E-mail: " + alunolista.getEmail() + ", Endereço: " + alunolista.getEndereco() + ", Ano de Ingresso: " + alunolista.getAnoDeIngresso() + ", Status de Matrícula: " + alunolista.getStatusMatricula() + ", Disciplinas: " + alunolista.getDisciplinas().stream().map(Disciplina::getNome).collect(Collectors.joining(", ")));
                                         }
                                         break;
                                     case 3:
@@ -135,12 +136,10 @@ public class Main {
 
                                         for (Aluno a : alunos) {
                                             if (a.getCpf().equals(cpfAlunoMatricular)) {
-                                                for (Disciplina d : disciplinas) {
-                                                    if (d.getNome().equals(codigoDisciplinaMatricular)) {
-                                                        a.getDisciplinas().add(d);
-                                                        System.out.println("Aluno matriculado na disciplina com sucesso!");
-                                                    }
-                                                }
+                                                disciplinas.stream()
+                                                        .filter(d -> d.getNome().equals(codigoDisciplinaMatricular))
+                                                        .forEach(a.getDisciplinas()::add);
+                                                System.out.println("Aluno matriculado na disciplina com sucesso!");
                                             }
                                         }
                                         break;
@@ -152,12 +151,8 @@ public class Main {
 
                                         for (Aluno a : alunos) {
                                             if (a.getCpf().equals(cpfAlunoDesmatricular)) {
-                                                for (Disciplina d : disciplinas) {
-                                                    if (d.getNome().equals(codigoDisciplinaDesmatricular)) {
-                                                        a.getDisciplinas().remove(d);
-                                                        System.out.println("Aluno desmatriculado da disciplina com sucesso!");
-                                                    }
-                                                }
+                                                a.getDisciplinas().removeIf(x -> x.getNome().equals(codigoDisciplinaDesmatricular));
+                                                System.out.println("Aluno desmatriculado da disciplina com sucesso!");
                                             }
                                         }
                                         break;
@@ -208,7 +203,7 @@ public class Main {
                                         break;
                                     case 2:
                                         for (Professor p : professores) {
-                                            System.out.println(p.getNome() + " - " + p.getCpf());
+                                            System.out.println("Professor: " + p.getNome() + " - CPF: " + p.getCpf() + " - Departamento: " + p.getDepartamento() + " - E-mail: " + p.getEmail());
                                         }
                                         break;
                                     case 3:
@@ -295,8 +290,6 @@ public class Main {
                                     case 1:
                                         System.out.print("Digite o nome da disciplina: ");
                                         String nomeDisciplina = scanner.nextLine();
-                                        System.out.print("Digite o tipo da disciplina (TEÓRICA ou PRÁTICA): ");
-                                        TipoDisciplina tipoDisciplina = TipoDisciplina.valueOf(scanner.nextLine().toUpperCase());
                                         System.out.print("Digite a carga horária da disciplina: ");
                                         int cargaHoraria = scanner.nextInt();
                                         scanner.nextLine();
@@ -306,12 +299,12 @@ public class Main {
                                         String horarioAulas = scanner.nextLine();
 
                                         System.out.print("Digite o tipo de disciplina (CONCRETA, ELETIVA ou OBRIGATÓRIA): ");
-                                        String tipo = scanner.nextLine();
+                                        TipoDisciplina tipo = TipoDisciplina.valueOf(scanner.nextLine());
 
-                                        if (tipo.equalsIgnoreCase("CONCRETA")) {
-                                            Disciplina disciplina = new DisciplinaConcreta(nomeDisciplina, tipoDisciplina, cargaHoraria, professor, horarioAulas);
-                                            disciplinas.add(disciplina);
-                                        } else if (tipo.equalsIgnoreCase("ELETIVA")) {
+                                        Disciplina disciplina = null;
+                                        if (tipo == TipoDisciplina.CONCRETA) {
+                                            disciplina = new DisciplinaConcreta(nomeDisciplina, tipo , cargaHoraria, professor, horarioAulas);
+                                        } else if (tipo == TipoDisciplina.ELETIVA) {
                                             System.out.print("Digite se a disciplina requer aprovação (SIM ou NÃO): ");
                                             boolean requerAprovacao = scanner.nextLine().equalsIgnoreCase("SIM");
                                             System.out.print("Digite a área de estudo da disciplina: ");
@@ -322,16 +315,15 @@ public class Main {
                                             System.out.print("Digite os recursos extras da disciplina: ");
                                             String recursosExtras = scanner.nextLine();
 
-                                            Disciplina disciplina = new DisciplinaEletiva(nomeDisciplina, requerAprovacao, areaDeEstudo, duracaoSemanas, recursosExtras);
-                                            disciplinas.add(disciplina);
-                                        } else if (tipo.equalsIgnoreCase("OBRIGATÓRIA")) {
+                                            disciplina = new DisciplinaEletiva(nomeDisciplina, requerAprovacao, areaDeEstudo, duracaoSemanas, recursosExtras);
+                                        } else if (tipo == TipoDisciplina.OBRIGATORIA) {
                                             System.out.print("Digite a descrição da disciplina: ");
                                             String descricao = scanner.nextLine();
 
-                                            Disciplina disciplina = new DisciplinaObrigatoria(nomeDisciplina, cargaHoraria, professor, horarioAulas, descricao);
-                                            disciplinas.add(disciplina);
+                                            disciplina = new DisciplinaObrigatoria(nomeDisciplina, cargaHoraria, professor, horarioAulas, descricao);
                                         }
 
+                                        disciplinas.add(disciplina);
                                         System.out.println("Disciplina cadastrada com sucesso!");
                                         break;
                                     case 2:

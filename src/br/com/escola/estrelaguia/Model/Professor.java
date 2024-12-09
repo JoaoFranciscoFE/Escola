@@ -75,4 +75,12 @@ public class Professor extends Pessoa implements ICadastrar, IConsultar {
     public void cadastrar() {
         System.out.println("Professor " + getNome() + " cadastrado com sucesso!");
     }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
