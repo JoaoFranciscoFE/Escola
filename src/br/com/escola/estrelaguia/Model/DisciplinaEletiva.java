@@ -2,9 +2,6 @@ package br.com.escola.estrelaguia.Model;
 
 import br.com.escola.estrelaguia.Enums.TipoDisciplina;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DisciplinaEletiva extends Disciplina {
     private boolean requerAprovacao;
     private String areaDeEstudo;
@@ -18,8 +15,6 @@ public class DisciplinaEletiva extends Disciplina {
         this.duracaoSemanas = duracaoSemanas;
         this.recursosExtras = recursosExtras;
     }
-
-
 
     @Override
     public void detalhesDisciplina() {

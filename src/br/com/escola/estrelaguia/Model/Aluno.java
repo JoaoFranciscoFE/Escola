@@ -100,6 +100,25 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
     public Set<Disciplina> getDisciplinas() {
         return disciplinas;
     }
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getAnoDeIngresso() {
+        return anoDeIngresso;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public String getStatusMatricula() {
+        return statusMatricula.toString();
+    }
 
     @Override
     public void exibirResumoNota() {
@@ -140,26 +159,4 @@ public class Aluno extends Pessoa implements IAvaliar, IMatriculavel, IConsultar
     public void cadastrar() {
         System.out.println("Aluno " + getNome() + " cadastrado com sucesso!");
     }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public int getAnoDeIngresso() {
-        return anoDeIngresso;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public String getStatusMatricula() {
-        return statusMatricula.toString();
-    }
-
-
 }

@@ -8,8 +8,8 @@ import java.util.List;
 public abstract class Disciplina {
     private String nome;
     private TipoDisciplina tipo;
-    int cargaHoraria;
-    String professor;
+    public int cargaHoraria;
+    public String professor;
     public String horarioAulas;
     private List<Nota> notas;
     private List<Aluno> alunosMatriculados = new ArrayList<>();
